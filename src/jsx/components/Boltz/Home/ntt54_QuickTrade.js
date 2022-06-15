@@ -57,8 +57,8 @@ const xcmRoutes = {
 
 					"BSX": {
 						        "Basilisk" : ["Karura", "Phala"], 
-								"Karura"   : ["Basilisk"],      
-								"Phala"	   : ["Basilisk"], 
+								"Karura"   : ["Basilisk","Phala"],      
+								"Phala"	   : ["Basilisk","Karura"], 
 							 }
 				};
 //#endregion
