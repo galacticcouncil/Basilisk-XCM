@@ -491,49 +491,49 @@ const QuickTrade = ({
 		{
 			setRowKAR({opacity: 0, clickable: "none", backgroundColor:"black" }); setRowMOVR({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowKINT({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowPHA({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowAUSD({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowKBTC({opacity: 0, clickable: "none", backgroundColor:"black"  });
 			selectedTokenfunction("KSM");
-			setRowKSM({opacity: 1, clickable: "" , backgroundColor:"orange"})
+			setRowKSM({opacity: 1, clickable: "" , backgroundColor: colorOriginChain})
       resetTargetAccount("KSM");
 		}
 		else if (assetClicked==="KAR")
 		{
 			setRowKSM({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowMOVR({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowKINT({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowPHA({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowAUSD({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowKBTC({opacity: 0, clickable: "none", backgroundColor:"black"  });
 			selectedTokenfunction("KAR");
-			setRowKAR({opacity: 1, clickable: "" , backgroundColor:"orange"})
+			setRowKAR({opacity: 1, clickable: "" , backgroundColor: colorOriginChain})
       resetTargetAccount("KAR");
 		}
 		else if (assetClicked==="MOVR")
 		{
 			setRowKSM({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowKAR({opacity: 0, clickable: "none" , backgroundColor:"black" }); setRowKINT({opacity: 0, clickable: "none" , backgroundColor:"black" }); setRowPHA({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowAUSD({opacity: 0, clickable: "none" , backgroundColor:"black" }); setRowKBTC({opacity: 0, clickable: "none" , backgroundColor:"black" });
 			selectedTokenfunction("MOVR");
-			setRowMOVR({opacity: 1, clickable: "" , backgroundColor:"orange"})
+			setRowMOVR({opacity: 1, clickable: "" , backgroundColor: colorOriginChain})
       resetTargetAccount("MOVR");
 		}
 		else if (assetClicked==="KINT")
 		{
 			setRowKSM({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowKAR({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowMOVR({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowPHA({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowAUSD({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowKBTC({opacity: 0, clickable: "none" , backgroundColor:"black" });
 			selectedTokenfunction("KINT");
-			setRowKINT({opacity: 1, clickable: "" , backgroundColor:"orange"})
+			setRowKINT({opacity: 1, clickable: "" , backgroundColor: colorOriginChain})
       resetTargetAccount("KINT");
 		}
 		else if (assetClicked==="PHA")
 		{
 			setRowKSM({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowKAR({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowMOVR({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowKINT({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowAUSD({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowKBTC({opacity: 0, clickable: "none" , backgroundColor:"black" });
 			selectedTokenfunction("PHA");
-			setRowPHA({opacity: 1, clickable: "" , backgroundColor:"orange"})
+			setRowPHA({opacity: 1, clickable: "" , backgroundColor: colorOriginChain})
       resetTargetAccount("PHA");
 		}
 		else if (assetClicked==="AUSD")
 		{
 			setRowKSM({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowKAR({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowMOVR({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowKINT({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowPHA({opacity: 0, clickable: "none" , backgroundColor:"black" }); setRowKBTC({opacity: 0, clickable: "none" , backgroundColor:"black" });
 			selectedTokenfunction("AUSD");
-			setRowAUSD({opacity: 1, clickable: "" , backgroundColor:"orange"})
+			setRowAUSD({opacity: 1, clickable: "" , backgroundColor: colorOriginChain})
       resetTargetAccount("AUSD");
 		}
 		else if (assetClicked==="KBTC")
 		{
 			setRowKSM({opacity: 0, clickable: "none" , backgroundColor:"black" }); setRowKAR({opacity: 0, clickable: "none" , backgroundColor:"black" }); setRowMOVR({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowKINT({opacity: 0, clickable: "none", backgroundColor:"black"  }); setRowPHA({opacity: 0, clickable: "none" , backgroundColor:"black" }); setRowAUSD({opacity: 0, clickable: "none", backgroundColor:"black"  });
 			selectedTokenfunction("KBTC");
-			setRowKBTC({opacity: 1, clickable: "" , backgroundColor:"orange"})
+			setRowKBTC({opacity: 1, clickable: "" , backgroundColor: colorOriginChain})
       resetTargetAccount("KBTC");
 		}
 		else 

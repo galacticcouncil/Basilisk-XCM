@@ -185,21 +185,21 @@ const Rococo = ({
 		{
 			setRowPHA({opacity: 0, clickable: "none", backgroundColor:"black" }); setRowKAR({opacity: 0, clickable: "none", backgroundColor:"black"  }); 
 			selectedTokenfunction("BSX");
-			setRowBSX({opacity: 1, clickable: "" , backgroundColor:"orange"})
+			setRowBSX({opacity: 1, clickable: "" , backgroundColor: colorOriginChain})
       resetTargetAccount("BSX");
 		}
     else if (assetClicked==="PHA")
 		{
 			setRowBSX({opacity: 0, clickable: "none", backgroundColor:"black" }); setRowKAR({opacity: 0, clickable: "none", backgroundColor:"black"  }); 
 			selectedTokenfunction("PHA");
-			setRowPHA({opacity: 1, clickable: "" , backgroundColor:"orange"})
+			setRowPHA({opacity: 1, clickable: "" , backgroundColor: colorOriginChain})
       resetTargetAccount("PHA");
 		}
     else if (assetClicked==="KAR")
 		{
 			setRowPHA({opacity: 0, clickable: "none", backgroundColor:"black" }); setRowBSX({opacity: 0, clickable: "none", backgroundColor:"black"  }); 
 			selectedTokenfunction("KAR");
-			setRowKAR({opacity: 1, clickable: "" , backgroundColor:"orange"})
+			setRowKAR({opacity: 1, clickable: "" , backgroundColor: colorOriginChain})
       resetTargetAccount("KAR");
 		}
     else 

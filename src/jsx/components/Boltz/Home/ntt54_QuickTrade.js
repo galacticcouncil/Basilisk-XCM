@@ -1439,7 +1439,7 @@ const QuickTrade = ({
 							// transfer_Asset_FromParachainToParachain("BSX", parachainCodes.Basilisk_Rococo, parachainCodes.Karura, sendToAddress, amount)
 
 							//Alternative Method1 *** tranfer ***/
-							// rococo_transfer_currency("BSX", parachainCodes.Karura, sendToAddress, amount)
+							rococo_transfer_currency("BSX", parachainCodes.Karura, sendToAddress, amount)
 
 							//Alternative Method2 *** tranferWithFee ***/
 							// rococo_transfer_currencyWithFee("BSX", parachainCodes.Karura, sendToAddress, amount, 1)
@@ -1454,7 +1454,7 @@ const QuickTrade = ({
 							// rococo_transfer_MultiAssetWithFee_FromParachainToParachain("BSX", parachainCodes.Basilisk_Rococo, parachainCodes.Karura, sendToAddress, amount, 1)
 
 							//Alternative Method0 *** tranferMultiAsset ***/
-							rococo_transfer_Asset_FromParachainToParachain("BSX", parachainCodes.Basilisk_Rococo, parachainCodes.Karura, sendToAddress, amount)
+							// rococo_transfer_Asset_FromParachainToParachain("BSX", parachainCodes.Basilisk_Rococo, parachainCodes.Karura, sendToAddress, amount)
 							.then((resolveMsg) => {
 								setTransactionMessage(
 										resolveMsg.map((msg, index) => {

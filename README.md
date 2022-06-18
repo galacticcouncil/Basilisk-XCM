@@ -1,6 +1,6 @@
 ![license](https://img.shields.io/badge/License-Apache%202.0-blue?logo=apache&style=flat-square)
 
-## Use any of this as you like but at your own risk. This a  submission for bounty, not a production battle tested and audited software
+## Please use at your own risk. This a submission for bounty, not production/battle-tested and audited software.
 
 <br>
 
@@ -14,16 +14,18 @@
 ### General Info
 ***
 <p>This repo contains software that allows the user to experiment and make XCM transfers in the Rococo testnet environment.</p>
-<p>Futhermore, it contains detailed code in regards to functions, objects and setups showing to any developer what functions have to be called and how XCM transfers can be expanded in more parachains and assets
+<p>Futhermore, it contains detailed code in regards to functions, objects and setups to show any developer which functions have to be called and how XCM transfers can be expanded across more parachains and assets.
 </p>
 <p>
-At the time of writing this software although HRMP channels have been openened between Basilisk and several parachains there was not a token generation event and therefore impossible for us to develop on Kusama/Polkadot for Basilisk/HydraDX.
+At the time of writing this software although HRMP channels have been opened between Basilisk and several parachains, there has not been a token generation event and therefore it was not possible for us to develop on Kusama/Polkadot for Basilisk/HydraDX.
 </p>
 <p>
-The Basilisk team has provided an environment of three parachains in Rococo Basilisk, Karura and Phala along with respective faucet tokens so we can develop and conduct XCM transfers
+To enable ongoing development the Basilisk team provided an environment of three parachains on the Rococo testnet.
+
+These were Basilisk, Karura and Phala along with their respective faucet tokens so we could develop and conduct XCM transfers.
 </p>
 <p>
-In addition to a user interface that allows Rococo XCM transfers we have added a full working User Interface for the Kusama ecosystem we developped for another bounty as well. It only fits natural to have all ecosystems within the same user interface. This also smoothens the transition for developers from Rococo testnet to Kusama mainnet and also expands further on showing how more parachains and assets can be added easily
+In addition to a user interface that allows Rococo XCM transfers, we have added a fully functioning User Interface for the Kusama ecosystem which we developed for another bounty as well. It is a natural fit to have all ecosystems within the same user interface. This also smoothens the transition for developers from the Rococo testnet to the Kusama mainnet and also expands further on showing how more parachains and assets can be easily added. 
 </p>
 <br>
 
@@ -31,17 +33,18 @@ In addition to a user interface that allows Rococo XCM transfers we have added a
 ***
 <p>
 We have deployed a website at 
-<a href="https://intense-escarpment-02481.herokuapp.com" target="_blank">https://intense-escarpment-02481.herokuapp.com</a>
-to showcase our bounty software
+<a href="https://intense-escarpment-02481.herokuapp.com" target="_blank">here</a>
+to showcase our software and bounty application.
 </p>
 <p>
-Please make sure you have polkadot wallet Chrome extension installed
+Please make sure you have the Polkadot wallet chrome extension installed.
 </p>
 <p>
-Please make sure you have metamask  wallet Chrome extension installed and connected to Moonriver parachain if you want to use the Kusama ecosystem UI
+Please make sure you also have the Metamask wallet chrome extension installed and connected to the Moonriver parachain if you want to use the Kusama ecosystem UI.
 </p>
 <p>
-The website has been developed to be compatible for 27" screen (anything 24" and above should be fine)
+The website is best viewed on screen resolutions above 2560x1440px. 
+Any future versions will accomodate responsive frameworks + mobile.
 </p>
 <br>
 
@@ -62,84 +65,113 @@ $ npm start
 
 <br>
 
-### Using the front end
+### Using the Application
 ***
 <p>
-As soon as the user lands on the website the Polkadot.js and metamask extensions pop up asking for approval to be used with this website. Please ensure that the Metamask is connected to the Moonriver chain for the Kusama ecosystemt. For Rococo the Meta Mask wallet is not used
+Welcome to ****
+<p>
+To begin with you must ensure you connect and approve the Polkadot.js and Metamask extension pop ups when interacting with this website. 
+
+Please also ensure that Metamask is connected to the Moonriver chain. 
+
+For Rococo the Metamask wallet is not used.
 </p>
 <p>
-The user sees the Polakdot and Metamask accounts to be used. If another polkadot account is desired choose from the top right dropdown (for metamask choose diectrly on your metamask extension).
+You can see the Polkadot and Metamask accounts to be used at the top of the screen. 
+If another Polkadot account is desired, please choose from the top right dropdown (and for metamask choose directly within your metamask extension).
 </p>
 <p>
-On the left part of the screen we can see the assets and parachains supported. In Rococo XCM transfers for BSX and PHA assets aare supported across the Basilisk, Phala and Karura parachains
-</p>
+Upon visiting the DApp, you can see that the screen is divided into two main sections:
+
+* The left side of the screen is where all of the instructions and choices are made by the user.
+* The right side of the screen is where all of the required transaction information is automatically prefilled before the transaction is eventually submitted.
 <p>
-Having selected the desired Polkadot account from the top right dropdown the balances of this account across all asssets and parachains is loaded
+<br>
+As soon as the accounts are connected, the balances of these accounts are loaded and displayed across all assets and parachains.
 </p>
+For example, looking at the BSX asset in the first column, reading across that row, we can see our BSX balance on the Basilisk chain, the Phala chain and the Karura Chain.
 <p>
-The user selections on the left part of the screen will be reflected on the right part of the screen preapring the XCM transaction
-</p>
 
 <br>
 <p>Lets try our first XCM transaction. </p>
 <br>
 
-![plot](./Printscreens/1_intro.png)
+![plot](./PrintscreensRococo/1_intro.png)
 <br>
 
 <br>
 <p>
-Choose the asset you want to transfer  e.g. BSX. This will be highlighted in orange and the bottom row options will be hidden to emphasize the next available options. The right part opf the screen changes from "Token" to "BSX
+Choose an asset from the first column e.g. BSX. 
+
+This will be highlighted in orange and only the row of that asset will remain visible to emphasize the next available options. 
+
+On the right side of the screen the "Token" field is automatically prefilled with your selection, "BSX".
 </p>
 <br>
 
-![plot](./Printscreens/2_SelectAsset.png)
+![plot](./PrintscreensRococo/2_SelectAsset.png)
 <br>
 
 <p>
-Select the origin chain that you want your BSX to be transferred from e.g. Basilisk Tab. This is highlighted in dark orange and the right part of the screen replaces "Origin Chain" with "Basilisk. Furthermore the rest of the tabs on the same row will remain visible or not depending on whether the relevant HRMP channel is available or not
-<br>
-Notice that the maximum available balance to transfer prefills the quantity to transfer. The user can of course change that
-In addition the correct format of your substrate account for the orgin chain is preloaded.
+Next, select the origin chain that you want to transfer the BSX "from", for example Basilisk. This is now also highlighted in orange.
+
+On the right side of the screen:
+* The "Origin Chain" field is automatically prefilled with the selection, "Basilisk".
+* The correct address format of the user's substrate account for the chosen origin chain is prefilled. 
+* The maximum available balance of the selected asset at the chosen Origin chain is prefilled in the quantity field. The user can of course edit this if they wish to transfer a different amount.
+
+We will send 1 BSX.
+
+Meanwhile on the left side of the screen, a check is made and the remaining tabs on the row of the selected asset will only remain visible depending on whether the relevant HRMP channel is available or not to transfer the selected asset.
+The reason for this is that currently some parachains do not support receiving "secondary" or "non-native" assets. 
 </p>
 <br>
 
-![plot](./Printscreens/3_SelectOriginChain.png)
+![plot](./PrintscreensRococo/3_SelectOriginChain.png)
 <br>
 <p>
-Select the destination chain you want to transfer your asset to. Lets choose Karura. Immediately this tab turn dark orangem, the destination chain is prefilled and the same Substrate accoutn the user has chose is shown in the destination chain format (of course the user can choose to send his asset to any address he prefers but as a default his own address at the destination parcahin is prefilled)
+Next, select the destination chain you want to transfer the BSX "to", for example, lets choose Karura. This tab is now also highlighted in orange.
+
+On the right side of the screen:
+* The "Destination Chain" field is automatically prefilled with the selection, "Karura".
+* The correct address format of the user's substrate account for the chosen destination chain is prefilled.
+* The user can of course choose to send their asset to any address but as a default this is prefilled with their own address at the destination parachain.
 </p>
 <br>
 
-![plot](./Printscreens/4_SelectDestinationChain.png)
+![plot](./PrintscreensRococo/4_SelectDestinationChain.png)
 <br>
 <p>
-Note: If the user clicks again or clicks reset the webpage will reset to the intial conditions
-</p>
-
-<br>
-<p>
-That's it! Click send and sign the transaction when the Polkadot Wallet Extesnion pops up
-</p>
-
-![plot](./Printscreens/5_SignTransaction.png)
-<br>
-<p>
-The user is immediately notified that his transaction for the XCM transfer has been submitted
+Note: If the user clicks again or clicks "Reset" the webpage will reset to the initial configuration.
 </p>
 
 <br>
 <p>
-Once the two parachains (origin and destination parachain) mine the relevant transactions, then the relevant origin chain extrinsic hash, block hash and XCMP message is shown
-</p>
-<p>
-Finally the balances are updated
-</p>
+That's it! 
 
-![plot](./Printscreens/6_TransactionMined.png)
+Click Send and sign the transaction when the Polkadot Wallet Extension appears.
+</p>
 <br>
 
-> TIP: How about making an exotic XCM transfer, like transfering BSX from Karura to Phala !!!
+![plot](./PrintscreensRococo/5_SignTransaction.png)
+<br>
+<p>
+The user is immediately notified that the XCM transfer has been submitted.
+</p>
+
+<br>
+<p>
+As soon as the Origin and Destination parachains mine the relevant transactions, the origin chain Extrinsic Hash, Block Hash and XCMP message are displayed on the screen.
+</p>
+<p>
+Lastly, on the left you can see the transfer of assets as the balances on the different parachains are updated.
+</p>
+<br>
+
+![plot](./PrintscreensRococo/6_TransactionMined.png)
+<br>
+
+> TIP: How about making an exotic XCM transfer, like transferring BSX from Karura to Phala !!!
 
 <br>
 <br>
@@ -154,29 +186,29 @@ Finally the balances are updated
 ***
 ### __Rococo__
 1. __Parachains__ 
-* Basilisk
-* Phala
-* Karura
+    * Basilisk
+    * Phala
+    * Karura
 2. __Assets__
-* BSX
-* PHA
+    * BSX
+    * PHA
 
 <br>
 
 ## Setup.js
 <p>
-The core of the code that handles functions to build and submit XCM transfers along with setting up Routes and APIs logic resides at Setup.js
+The core of the code that handles functions to build and submit XCM transfers along with the logic for setting up Routes and APIs resides at Setup.js
 <br>
-This is then called from App.js and front end UI components 
+This is then called from App.js and the front end UI components.
 </p>
 <br>
 
 ## Setting up the APIs
 
 <br>
-<p>At App.js Lines 165 to 175 we find the code that calls Setup.js to setup the parchain rpcs </p>
+<p>At App.js Lines we find the code that calls Setup.js to setup the parchain rpcs. </p>
 
-__App Lines 2295 to 2328__ 
+__App.js Lines 165 to 175__ 
 ```js
 const { api: api_Rococo_Karura } = await setup_SubstrateChain("Rococo_Karura");
 // console.log("api_Rococo_Karura: ",api_Rococo_Karura);
@@ -192,7 +224,7 @@ setApi("Rococo_Phala", api_Rococo_Phala);
 ```
 
 <br>
-<p>At Setup.js we create the api rpc connections and store these in variables to be used for subsmitting transactions to relevant parachains</p>
+<p>At Setup.js we create the api rpc connections and store these in variables to be used for submitting transactions to the relevant parachains.</p>
 
 __Setup.js Lines 2295 to 2328__ 
 ```js
@@ -256,12 +288,12 @@ const apiObj = {
 ## Setting up the Assets
 
 <br>
-<p>For each asset we want to XCM transfer we need certain specifications that characterise it.</p>
-<p> The type of specifications varies dependent on which parachain this asset is the parachain native token.</p>
-<p> Some examples of type of specification are the GeneralKey of the asset, the Pallet Id of the asset or the asset u128 id of the asset. This is entirely dependant on how the parachain has setup its own version of xcm pallet</p>
-<p>For Rococo and the these parachains we will focus on the GeneralKey of the asset</p>
+<p>For each asset we want to XCM transfer we need to know certain specifications.</p>
+<p> The type of specifications varies dependent on which parachain this asset is the native token.</p>
+<p> Some examples of type of specification are the GeneralKey of the asset, the Pallet Id of the asset or the u128 id of the asset. This is entirely dependant on how the parachain has setup its own version of xcm pallet.</p>
+<p>For Rococo and these parachains we will focus on the GeneralKey of the asset.</p>
 
-<p>General Keys of assets and asset's native parachain</p>
+<p>General Keys of assets and asset's native parachain:</p>
 
 __Setup.js Lines 53 to 65__ 
 ```js
@@ -279,25 +311,25 @@ const tokenBirthChain     = {
                              };     
 ```
 
-> TIP: For any new asset go to its native parachain URL or other parachain URL that supports the asset for XCM transfers and within Developer>Chain state> modules asset information about its GeneralKey or Pallet instance or Currency id can be found. Here is an example for BSX having GeneralKey: 0x00000000 that can be found at the Karura Rococo in the assetRegistry>foreignAssetLocations 
+> TIP: For any new asset go to its native parachain URL or other parachain URL that supports the asset for XCM transfers and within Developer>Chain state> modules asset information about its GeneralKey or Pallet instance or Currency id can be found. 
+Here is an example for BSX having GeneralKey: 0x00000000 that can be found at the Karura Rococo in the assetRegistry>foreignAssetLocations 
  [https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkarura-rococo.aca-dev.network#/chainstate](https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkarura-rococo.aca-dev.network#/chainstate)
 <br>
 
-<br>
 <br>
 
 
 ## Setting up Routes  
 
-<p>Moving over to ntt54_QuickTrade.js file we can find object xcmRoutes</p>
+<p>Moving over to ntt54_QuickTrade.js file we can find object xcmRoutes.</p>
 <p>
-In this object we set up the routes that define for each asset from what orgin parachain it can be transferred from to what destination parachain. This is acting as a map to see what xcm transfers are possible
+In this object we set up the routes that define the available origin and destination parachains for each asset. This acts as a map to see what xcm transfers are possible.
 </p>
 <p>
 For example for asset "BSX" we can see that when the origin chain is Basilisk it can be transferred to Karura or Phala.
 </p>
 <p>
-In a more exotic xcm transfer we can see that BSX can be trabsferred from an account in Karura to Phala and vice versa
+In a more exotic XCM transfer we can see that BSX can be transferred from an account in Karura to Phala and vice versa
 </p>
 
 
@@ -324,7 +356,7 @@ const xcmRoutes = {
 
 <br>
 
-## Setting up parchainCodes and tokens in the tokeList
+## Setting up parachainCodes and tokens in the tokenList
 
 <p>Each parachain has a unique id number. This helps us identifying the location of its native asset but also to point as the destination parachain in an XCM transfer. If a new parachain needs to be added then the relevant parachain code needs to be added to the parachainCodes object</p>
 <p>Any new asset needs to be added to the tokenList
@@ -352,20 +384,18 @@ const tokenList = ["KSM","KAR","AUSD","KINT","KBTC","PHA","MOVR","BSX"];
 ```
 
 <br>
-<br>
-<br>
 
 
 ## Functions to call for XCM transfers
-<p>Within ntt54_QuickTrade.js and the transferBalance function, we can find all relevant functions to be called for any supported assets and routes
+<p>Within ntt54_QuickTrade.js and the transferBalance function, we can find all relevant functions to be called for all supported assets and routes.
 </p>
-<p>Focusing on transfers of BSX the relevant lines are from 1408 to 1556 covering all supported routes for transfering BSX
-</p>
-<p>
-When sending BSX via XCM from Basilisk to another parachain there are many functions supported reflecting the functions found in the xTokens pallet module
+<p>Focusing on transfers of BSX the relevant lines are from 1408 to 1556 covering all supported routes for transfering BSX.
 </p>
 <p>
-Below we can see 6 different ways of transfering BSX from Basilisk to Karura
+When sending BSX via XCM from Basilisk to another parachain there are many functions supported reflecting the functions found in the xTokens pallet module.
+</p>
+<p>
+Below we can see 6 different ways of transfering BSX from Basilisk to Karura:
 </p>
 
 ```js
@@ -390,7 +420,11 @@ rococo_transfer_Asset_FromParachainToParachain("BSX", parachainCodes.Basilisk_Ro
 
 <br>
 <p>
-The standard function we prefer for its simplicity and generic use, is the last one Method0(rococo_transfer_Asset_FromParachainToParachain) , in which the user provides the asset "BSX, the origin parachain code, destination parachain code, the account to send BSX to, and the amount 
+The standard function we prefer for its simplicity and generic use, is the last one:
+
+Method0(rococo_transfer_Asset_FromParachainToParachain)
+
+in which the user provides the asset "BSX, the origin parachain code, destination parachain code, the account to send BSX to, and the amount.
 
 ```js
 rococo_transfer_Asset_FromParachainToParachain("BSX", parachainCodes.Basilisk_Rococo, parachainCodes.Karura, sendToAddress, amount)
@@ -399,20 +433,20 @@ rococo_transfer_Asset_FromParachainToParachain("BSX", parachainCodes.Basilisk_Ro
 
 <br>
 <p>
-In Method5(rococo_transfer_MultiAssetWithFee_FromParachainToParachain) the only difference is we also define the fees to transfer
+In Method5(rococo_transfer_MultiAssetWithFee_FromParachainToParachain) the only difference is we also define the fees to transfer.
 </p>
 <p>
-In Method4(rococo_transfer_MultiAssetS_FromParachainToParachain) and Method3 (rococo_transfer_multiCurrencies) we can expand and send multiple asset or currencies with only one XCM transaction but also defining which of these assets will be the one to pay fees at the destination parachain.
-<br>Note: When using these functions we need to know what assets the destination parachain accepts as eligible to pay the fees
+In Method4(rococo_transfer_MultiAssetS_FromParachainToParachain) and Method3 (rococo_transfer_multiCurrencies) we can expand and send multiple assets or currencies with only one XCM transaction but also defining which of these assets will be the one to pay fees at the destination parachain.
+<br>Note: When using these functions we need to know what assets are eligible to pay the fees at the destination parachain.
 </p>
 <p>
-Method1(rococo_transfer_currency) is the simplest of all to use, as only the destination parachain code, account to send BSX to, and amount are required
+Method1(rococo_transfer_currency) is the simplest of all to use, as only the destination parachain code, account to send BSX to, and amount are required.
 </p>
 <p>
-Method2(rococo_transfer_currencyWithFee) is very similar to Method1(rococo_transfer_currency) but with the added argument of stating the fees we want to pass along with the XCM transfer
+Method2(rococo_transfer_currencyWithFee) is very similar to Method1(rococo_transfer_currency) but with the added argument of stating the fees we want to pass along with the XCM transfer.
 </p>
 
-> TIP: Find the code block below and comment  rococo_transfer_Asset_FromParachainToParachain and uncomment any other Method to see the XCM transaction
+> TIP: Find the code block below and comment  rococo_transfer_Asset_FromParachainToParachain and uncomment any other Method to see the XCM transaction.
 
 <br>
 
