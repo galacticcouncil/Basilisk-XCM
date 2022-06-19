@@ -50,7 +50,12 @@ Any future versions will accomodate responsive frameworks + mobile.
 
 ### Demo Video
 ***
-<p> A demo video can be found at ******** TODO ******** </p>
+<p> A demo video can be found
+<a href="https://www.dropbox.com/s/cecwxy5oqo8vqx5/Basilisk%20Cross-Chain%20Transfers%20Demo.mp4?dl=0" target="_blank">here</a>
+to demonstrate the many features of our XCM application. Please check it out!
+</p>
+
+
 <br>
 
 ### Installation
@@ -68,7 +73,7 @@ $ npm start
 ### Using the Application
 ***
 <p>
-Welcome to ****
+Welcome to Morph (for Basilisk).
 <p>
 To begin with you must ensure you connect and approve the Polkadot.js and Metamask extension pop ups when interacting with this website. 
 
