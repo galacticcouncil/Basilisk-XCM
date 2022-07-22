@@ -47,6 +47,7 @@ const apiObj = {
                 "2004" : null,
                 "2090" : null,
                 "2007" : null,
+                "2090": null,
                 "r2004" : null,
                 "r2090" : null,
                 "r2000" : null,
@@ -523,7 +524,17 @@ const transfer_MultipleAssets_FromParachainToParachain = async (_token="KBTC", f
 
 
 
-
+const tokenToId = (token) => {
+  console.log('tokenToId', token);
+  switch (token) {
+    case "BSX":
+      return 0;
+    case "KUSD":
+      return 1;
+    case "KSM":
+      return 2;
+  }
+}
 
 //#region ***** Transfer Asset from Parachain to Parachain //*****   
 const transfer_Asset_FromParachainToParachain = async (_token="KUSD", originParachain=2000, parachain=1000, EVMaccount="0x1270dbdE6Fa704f9363e47Dd05493D5dae329A4d", amount="1") => {
@@ -551,6 +562,7 @@ const transfer_Asset_FromParachainToParachain = async (_token="KUSD", originPara
               general_key==="0x000b"? mantissa = mantissa8   : mantissa = mantissa12;
             }
 
+            const accountId32tohexvalue = getAccountIdtoHex(EVMaccount);  
 
 
             let multiAssetLocation;
@@ -570,33 +582,62 @@ const transfer_Asset_FromParachainToParachain = async (_token="KUSD", originPara
             }
 
 
+
             const txAssetParachainToParachain = await api.tx.xTokens
-            .transferMultiasset(
-                { V1: 
-                          { 
-                              id:  { 
-                                    Concrete: { 
-                                                parents: 1, 
-                                                interior: multiAssetLocation
-                                              } 
-                                    },
-                              fun: { Fungible: (new BN(amount * mantissa)) }
+              .transfer(
+                originParachain === 2000
+                  ? ({
+                    Token: _token
+                  })
+                  : tokenToId(_token),
+                new BN(amount * mantissa12),
+                {
+                  V1: {
+                    parents: 1,
+                    interior: {
+                      X2: [
+                        {
+                          Parachain: parachain
+                        },
+                        {
+                          AccountId32: {
+                            network: "Any",
+                            id: accountId32tohexvalue
                           }
+                        }
+                      ]
+                    }
+                  }
                 },
-                { V1: {
-                                parents: 1,
-                                interior: {
-                                    x2: [
-                                          { 
-                                            Parachain: parachain,
-                                          },
-                                          beneficiary
-                                        ]
-                                }
-                        } 
-                },
-                (new BN(1000000000) )
-            )      
+                new BN(10000000000)
+              )
+            // const txAssetParachainToParachain = await api.tx.xTokens
+            // .transferMultiasset(
+            //     { V1: 
+            //               { 
+            //                   id:  { 
+            //                         Concrete: { 
+            //                                     parents: 1, 
+            //                                     interior: multiAssetLocation
+            //                                   } 
+            //                         },
+            //                   fun: { Fungible: (new BN(amount * mantissa)) }
+            //               }
+            //     },
+            //     { V1: {
+            //                     parents: 1,
+            //                     interior: {
+            //                         x2: [
+            //                               { 
+            //                                 Parachain: parachain,
+            //                               },
+            //                               beneficiary
+            //                             ]
+            //                     }
+            //             } 
+            //     },
+            //     (new BN(1000000000) )
+            // )      
             .signAndSend(polkadotInjectorAddress, { signer: polkadotInjector.signer }, async ({ status, events=[], dispatchError }) => {
                 // console.log(`Current status: `,status,` Current status is ${status.type}`);
                 let errorInfo;
@@ -967,7 +1008,7 @@ const transferFromParachainToRelay = async (originChain, accntId32, amount="1") 
           ? {
             Token: "KSM",
           }
-          : 1,
+          : tokenToId("KSM"),
         (new BN(amount * mantissa12)),
         {
           V1: {
@@ -1187,28 +1228,31 @@ const transferFromBasiliskToParachain = async (token, originParachain, parachain
         return;
       }
 
-      let api = BasiliskApi
+      let api = apiObj[`${originParachain}`];
       
       const txAssetBasiliskToParachain = await api.tx.xTransfer
       .transfer(
-          { 
-              // id:  { 
-              //         Concrete: concrete
-              //     },
-              // fun: { Fungible: amountconv }
-          },
+          tokenToId(token),
+          new BN(amount ** mantissa12),
           {
+            V1: {
               parents: 1,
               interior: {
-                          // x2: [
-                          //       { 
-                          //         Parachain: parachain,
-                          //       },
-                          //       beneficiary
-                          //     ]
-                        }
-          },
-          (new BN(1000000000) )
+                X2: [
+                  {
+                    Parachain: parachain
+                  },
+                  {
+                    AccountId32: {
+                      network: "Any",
+                      id: getAccountIdtoHex(account),
+                    }
+                  }
+                ]
+              }
+            }
+          }
+          (new BN(1500000000) )
       )     
       .signAndSend(polkadotInjectorAddress, { signer: polkadotInjector.signer }, async ({ status, events=[], dispatchError }) => {
           // console.log(`Current status: `,status,` Current status is ${status.type}`);
@@ -1492,6 +1536,7 @@ const rococo_transfer_Asset_FromParachainToParachain = async (_token="BSX", orig
              general_key==="0x000b"? mantissa = mantissa8   : mantissa = mantissa12;
            }
 
+           const accountId32tohexvalue = getAccountIdtoHex(account);  
 
 
            let multiAssetLocation;
@@ -1512,32 +1557,62 @@ const rococo_transfer_Asset_FromParachainToParachain = async (_token="BSX", orig
 
 
            const txAssetParachainToParachain = await api.tx.xTokens
-           .transferMultiasset(
-               { V1: 
-                         { 
-                             id:  { 
-                                   Concrete: { 
-                                               parents: 1, 
-                                               interior: multiAssetLocation
-                                             } 
-                                   },
-                             fun: { Fungible: (new BN(amount * mantissa)) }
-                         }
-               },
-               { V1: {
-                               parents: 1,
-                               interior: {
-                                   x2: [
-                                         { 
-                                           Parachain: parachain,
-                                         },
-                                         beneficiary
-                                       ]
-                               }
-                       } 
-               },
-               (new BN(1000000000) )
-           )      
+            .transfer(
+              originParachain === 2000
+                ? {
+                  Token: _token
+                }
+                : (
+                  _token 
+                ),
+              new BN(amount * mantissa12),
+              {
+                V1: {
+                  parents: 1,
+                  interior: {
+                    X2: [
+                      {
+                        Parachain: parachain
+                      },
+                      {
+                        AccountId32: {
+                          network: "Any",
+                          id: accountId32tohexvalue
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              new BN(10000000000)
+            )
+          //  const txAssetParachainToParachain = await api.tx.xTokens
+          //  .transferMultiasset(
+          //      { V1: 
+          //                { 
+          //                    id:  { 
+          //                          Concrete: { 
+          //                                      parents: 1, 
+          //                                      interior: multiAssetLocation
+          //                                    } 
+          //                          },
+          //                    fun: { Fungible: (new BN(amount * mantissa)) }
+          //                }
+          //      },
+          //      { V1: {
+          //                      parents: 1,
+          //                      interior: {
+          //                          x2: [
+          //                                { 
+          //                                  Parachain: parachain,
+          //                                },
+          //                                beneficiary
+          //                              ]
+          //                      }
+          //              } 
+          //      },
+          //      (new BN(1000000000) )
+          //  )      
            .signAndSend(polkadotInjectorAddress, { signer: polkadotInjector.signer }, async ({ status, events=[], dispatchError }) => {
                // console.log(`Current status: `,status,` Current status is ${status.type}`);
                let errorInfo;

@@ -294,7 +294,7 @@ const QuickTrade = ({
 							setTransfer_IsSubmiting(true);
 							setTransactionMessage(`Transfer AUSD from Basilisk to Karura, submitted.`);
 
-							transferFromBasiliskToParachain("KUSD", parachainCodes.Karura, parachainCodes.Karura, sendToAddress, amount)
+							transfer_Asset_FromParachainToParachain("KUSD", parachainCodes.Basilisk, parachainCodes.Karura, sendToAddress, amount)
 							.then((resolveMsg) => {
 								setTransactionMessage(
 										resolveMsg.map((msg, index) => {
@@ -316,13 +316,14 @@ const QuickTrade = ({
 					//#region baseCurrency BSX
 					else if (baseCurrency==="BSX")
 					{
+						// TODO: not working, fix it!!
 						if (orginChain==="Karura" && targetChainDestination==="Basilisk")
 						{
 							console.log(`We are sending BSX from Basilisk to Phala inputTranferAmount:${amount} sendToAddress:${sendToAddress}`);
 							setTransfer_IsSubmiting(true);
 							setTransactionMessage(`Transfer BSX from Basilisk to Phala, submitted.`);
 
-							rococo_transfer_Asset_FromParachainToParachain("BSX", parachainCodes.Basilisk_Rococo, parachainCodes.Phala, sendToAddress, amount)
+							transfer_Asset_FromParachainToParachain("BSX", parachainCodes.Karura, parachainCodes.Basilisk, sendToAddress, amount)
 							.then((resolveMsg) => {
 								setTransactionMessage(
 										resolveMsg.map((msg, index) => {
@@ -330,7 +331,7 @@ const QuickTrade = ({
 										})
 								);
 
-								setTimeout(() => { getROCOCO_AllBalancesAndAccountFormats(polakdotAccountSigner.address, accountList[0]); },10000);
+								// setTimeout(() => { getROCOCO_AllBalancesAndAccountFormats(polakdotAccountSigner.address, accountList[0]); },10000);
 								setTransfer_IsSubmiting(false);
 								setInputTranferAmount("");  resetAll();
 							})
@@ -362,7 +363,7 @@ const QuickTrade = ({
 							// rococo_transfer_MultiAssetWithFee_FromParachainToParachain("BSX", parachainCodes.Basilisk_Rococo, parachainCodes.Karura, sendToAddress, amount, 1)
 
 							//Alternative Method0 *** tranferMultiAsset ***/
-							// rococo_transfer_Asset_FromParachainToParachain("BSX", parachainCodes.Basilisk_Rococo, parachainCodes.Karura, sendToAddress, amount)
+							transfer_Asset_FromParachainToParachain("BSX", parachainCodes.Basilisk, parachainCodes.Karura, sendToAddress, amount)
 							.then((resolveMsg) => {
 								setTransactionMessage(
 										resolveMsg.map((msg, index) => {
@@ -370,7 +371,7 @@ const QuickTrade = ({
 										})
 								);
 
-								setTimeout(() => { getROCOCO_AllBalancesAndAccountFormats(polakdotAccountSigner.address, accountList[0]); },10000);
+								// setTimeout(() => { getROCOCO_AllBalancesAndAccountFormats(polakdotAccountSigner.address, accountList[0]); },10000);
 								setTransfer_IsSubmiting(false);
 								setInputTranferAmount("");  resetAll();
 							})

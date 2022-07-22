@@ -26,11 +26,11 @@ export const chainOptions = [
     allowedChains: ['Basilisk', 'Kusama'],
     allowedTokens: {
       from: {
-        'Basilisk': ['aUSD', 'BSX'],
+        'Basilisk': ['AUSD', 'BSX'],
         'Kusama': ['KSM'],
       },
       to: {
-        'Basilisk': ['aUSD', 'BSX'],
+        'Basilisk': ['AUSD', 'BSX'],
         'Kusama': ['KSM'],
       },
     }
@@ -41,11 +41,11 @@ export const chainOptions = [
     allowedChains: ['Kusama', 'Karura'],
     allowedTokens: {
       from: {
-        'Karura': ['aUSD', 'BSX'],
+        'Karura': ['AUSD', 'BSX'],
         'Kusama': ['KSM'],
       },
       to: {
-        'Karura': ['aUSD', 'BSX'],
+        'Karura': ['AUSD', 'BSX'],
         'Kusama': ['KSM'],
       },
     }
@@ -58,8 +58,8 @@ export const assetOptions = [
     label: 'BSX',
   },
   {
-    value: 'aUSD',
-    label: 'aUSD',
+    value: 'AUSD',
+    label: 'AUSD',
   },
   {
     value: 'KSM',
