@@ -166,9 +166,9 @@ function App() {
         // // console.log("api_Rococo_Karura: ",api_Rococo_Karura);
         // setApi("Rococo_Karura", api_Rococo_Karura);
 
-        const { api: api_Rococo_Basilisk } = await setup_SubstrateChain("Rococo_Basilisk");
+        const { api: api_Basilisk } = await setup_SubstrateChain("Basilisk");
         // console.log("api_Rococo_Basilisk: ",api_Rococo_Basilisk);
-        setApi("Rococo_Basilisk", api_Rococo_Basilisk);
+        setApi("Basilisk", api_Basilisk);
 
         // const { api: api_Rococo_Phala } = await setup_SubstrateChain("Rococo_Phala");
         // // console.log("api_Rococo_Phala: ",api_Rococo_Phala);

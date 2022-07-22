@@ -33,6 +33,7 @@ const setApi = (apiName, api) => {
   else if (apiName==="Phala")           { PhalaApi           = api; apiObj["2004"] = api; }
   else if (apiName==="Basilisk")        { BasiliskApi        = api; apiObj["2090"] = api; }
   else if (apiName==="Shiden")          { ShidenApi          = api; apiObj["2007"] = api; }
+  
 
   else if (apiName==="Rococo_Phala")    { Rococo_RhalaApi    = api; apiObj["r2004"] = api; }
   else if (apiName==="Rococo_Basilisk") { Rococo_BasiliskApi = api; apiObj["r2090"] = api; }
@@ -779,61 +780,107 @@ const transferFromRelayToParachain = async (apiRelay, parachain=1000, EVMaccount
         resolve("Polkadot Extension Error Please Refresh Dapp");
         return;
       }
-      
-      // const now = await apiRelay.query.timestamp.now();   // Retrieve the last timestamp
-      // const { nonce, data: balance } = await apiRelay.query.system.account(polkadotInjectorAddress);   // Retrieve the account balance & nonce via the system module
-      // console.log(`${now}: balance of ${balance.free} and a nonce of ${nonce}`);
-    
-      let beneficiary;
-      if (parachain===1000 || parachain===2023)
-      {
-        beneficiary = { 
-                        V1: {
-                              parents: 0, 
-                              interior: { 
-                                          X1: { 
-                                                AccountKey20: { 
-                                                                network: "Any", 
-                                                                key: EVMaccount 
-                                                              } 
-                                              } 
-                                        }
-                            } 
-                      } 
-      }
-      else
-      {
+        console.log('EVM ACCOUNT', EVMaccount)
         const accountId32tohexvalue = getAccountIdtoHex(EVMaccount);  
-        beneficiary = { 
-                        V1: {
-                              parents: 0, 
-                              interior: { 
-                                          X1: { 
-                                                AccountId32 : { 
-                                                                network: "Any", 
-                                                                id: accountId32tohexvalue 
-                                                              } 
-                                              } 
-                                        } 
-                            } 
-                      };
-      }
+        // const beneficiary = { 
+        //                 V1: {
+        //                       parents: 0, 
+        //                       interior: { 
+        //                                   X1: { 
+        //                                         AccountId32 : { 
+        //                                                         network: "Any", 
+        //                                                         id: accountId32tohexvalue 
+        //                                                       } 
+        //                                       } 
+        //                                 } 
+        //                     } 
+        //               };
 
       const txRelaytoParachain = await apiRelay.tx.xcmPallet
-      .limitedReserveTransferAssets(
-          { V1: {parents: 0, interior: { X1: { Parachain: parachain } } } },
-          beneficiary,
-          { V1: [ 
-                    { 
-                        id:  { Concrete: { parents: 0, interior: "Here"} },
-                        fun: { Fungible: (new BN(amount * mantissa12)) }
+        .execute({
+          V2: [
+            {
+              TransferReserveAsset: {
+                assets: [
+                  {
+                    id: {
+                      Concrete: {
+                        parents: 0,
+                        interior: "Here"
+                      }
+                    },
+                    fun: {
+                      Fungible: 1000000000
                     }
-                ] 
-          },
-        0, 
-        {Limited: new BN(1000000000)}
+                  }
+                ],
+                dest: {
+                  parents: 0,
+                  interior: {
+                    X1: {
+                      Parachain: parachain
+                    }
+                  }
+                },
+                xcm: [
+                  {
+                    BuyExecution: {
+                      fees: {
+                        id: {
+                          Concrete: {
+                            parents: 1,
+                            interior: "Here"
+                          }
+                        },
+                        fun: {
+                          Fungible: 1000000000
+                        }
+                      },
+                      weightLimit: {
+                        Limited: 1000000000
+                      }
+                    }
+                  },
+                  {
+                    DepositAsset: {
+                      assets: {
+                        Wild: "All"
+                      },
+                      maxAssets: 1,
+                      beneficiary: {
+                        parents: 0,
+                        interior: {
+                          X1: {
+                            AccountId32: {
+                              network: "Any",
+                              id: accountId32tohexvalue
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }, (new BN(1000000000)))
 
-      )         
+      // const txRelaytoParachain = await apiRelay.tx.xcmPallet
+      // .limitedReserveTransferAssets(
+      //     { V1: {parents: 0, interior: { X1: { Parachain: parachain } } } },
+      //     beneficiary,
+      //     { V1: [ 
+      //               { 
+      //                   id:  { Concrete: { parents: 0, interior: "Here"} },
+      //                   fun: { Fungible: (new BN(amount * mantissa12)) }
+      //               }
+      //           ] 
+      //     },
+      //   0, 
+      //   {Limited: new BN(1000000000)}
+
+      // )         
       .signAndSend(polkadotInjectorAddress, { signer: polkadotInjector.signer }, async ({ status, events=[], dispatchError }) => {
           // console.log(`Current status: `,status,` Current status is ${status.type}`);
           let errorInfo;
@@ -905,8 +952,7 @@ const transferFromParachainToRelay = async (originChain, accntId32, amount="1") 
 
       let api;
       if (originChain==="Karura") api = KaruraApi;
-      else if (originChain==="Kintsugi") api = KintsugiApi;
-
+      if (originChain==="Basilisk") api = BasiliskApi;
 
       // const now = await api.query.timestamp.now();    
       // const { nonce, data: balance } = await api.query.system.account(polkadotInjectorAddress);   // Retrieve the account balance & nonce via the system module
@@ -916,31 +962,27 @@ const transferFromParachainToRelay = async (originChain, accntId32, amount="1") 
       const accountId32tohexvalue = getAccountIdtoHex(accntId32);  
 
       const txAssetParachainToRelay = await api.tx.xTokens
-      .transferMultiasset(
-          { V1: 
-                    { 
-                        id:  { 
-                              Concrete: { 
-                                            parents: 1, 
-                                            interior: "Here"
-                                          } 
-                              },
-                        fun: { Fungible: (new BN(amount * mantissa12)) }
-                    }
-          },
-          { V1: {
-                          parents: 1,
-                          interior: {
-                                      x1: {
-                                            AccountId32: {
-                                                            network: "Any",
-                                                            id: accountId32tohexvalue
-                                                          }
-                                          }
-                                    }
-                  } 
-          },
-          (new BN(1000000000) )
+      .transfer(
+        originChain === 'Karura'
+          ? {
+            Token: "KSM",
+          }
+          : 1,
+        (new BN(amount * mantissa12)),
+        {
+          V1: {
+            parents: 1,
+            interior: {
+              X1: {
+                AccountId32: {
+                  network: "Any",
+                  id: accountId32tohexvalue
+                }
+              }
+            }
+          }
+        },
+        (new BN(500000000) ),
       )     
       .signAndSend(polkadotInjectorAddress, { signer: polkadotInjector.signer }, async ({ status, events=[], dispatchError }) => {
           // console.log(`Current status: `,status,` Current status is ${status.type}`);
@@ -1135,112 +1177,35 @@ const transfer_MOVR_FromParachainToParachain = async (originChain, parachainID, 
 
 
 
-//#region ***** Transfer from Phala to Parachain //*****   
-const transferFromPhalaToParachain = async (token, originParachain, parachain, account, amount="1") => {
+//#region ***** Transfer from Basilisk to Parachain //*****   
+const transferFromBasiliskToParachain = async (token, originParachain, parachain, account, amount="1") => {
   return new Promise (async (resolve, reject) => {
   
       if (!polkadotInjector || !polkadotInjectorAddress) {
-        console.log(`transferFromPhalaToParachain polkadotInjector and/or polkadotInjectorAddress are null. Cannot proceed!!!`);
+        console.log(`transferFromBasiliskToParachain polkadotInjector and/or polkadotInjectorAddress are null. Cannot proceed!!!`);
         resolve("Polkadot Extension Error Please Refresh Dapp");
         return;
       }
 
-      let api;
-      //Basilisk 2090 HRMP with Phala only available in Rococo at the moment
-      if (parachain===2090 || token==="BSX")  api = Rococo_RhalaApi;
-      else api = PhalaApi;
-
-      // const now = await api.query.timestamp.now();    
-      // const { nonce, data: balance } = await api.query.system.account(polkadotInjectorAddress);   // Retrieve the account balance & nonce via the system module
-      // // const {free: free1 , reserved: reserved1, frozen: frozen1} = await api.query.tokens.accounts(polkadotInjectorAddress, {Token: token}); 
-      // console.log(` generalKeyWithout_0x: 0x${generalKeyWithout_0x[token]}  ${now}: balance of ${balance.free} and a nonce of ${nonce}`);
-
-
-      let concrete, amountconv;
-      amountconv =  new BN(amount * mantissa12);
-
-      if (token.toLowerCase()==="pha")
-      {
-          concrete =  { 
-                        parents : 0, 
-                        interior: "Here"
-                      } 
-      }
-
-      else if (token.toLowerCase()==="ksm")
-      {
-          concrete =  { 
-                        parents : 1, 
-                        interior: "Here"
-                      } 
-      }
-
-      else if (token.toLowerCase()==="movr")  
-      {
-          concrete = { 
-                        parents: 1, 
-                        interior: 
-                                  {
-                                    x2: [
-                                          { 
-                                              Parachain: originParachain,
-                                          },
-                                          {
-                                              PalletInstance: 10
-                                          }
-                                        ]
-                                  }
-                      } ;
-          amountconv = (ethers.utils.parseUnits(amount, 18)).toString();
-      }
-      else  //bsx
-      {
-          concrete = { 
-                        parents: 1, 
-                        interior: 
-                                  {
-                                    x2: [
-                                          { 
-                                              Parachain: originParachain,
-                                          },
-                                          {
-                                              Generalkey:`0x${generalKeyWithout_0x[token]}`
-                                          }
-                                        ]
-                                  }
-                      } 
-      }
-
-
-      let beneficiary, mantissa; 
-      if (parachain===1000 || parachain===2023) //MoonbaseAlpha or Moonriver
-      {
-        beneficiary =  { accountKey20: { network: "Any",  key: account } };
-      }
-      else
-      {
-        const accountId32tohexvalue = getAccountIdtoHex(account);  
-        beneficiary = { AccountId32 : { network: "Any",  id : accountId32tohexvalue } };
-      }
-
+      let api = BasiliskApi
       
-      const txAssetPhalaToParachain = await api.tx.xTransfer
+      const txAssetBasiliskToParachain = await api.tx.xTransfer
       .transfer(
           { 
-              id:  { 
-                      Concrete: concrete
-                  },
-              fun: { Fungible: amountconv }
+              // id:  { 
+              //         Concrete: concrete
+              //     },
+              // fun: { Fungible: amountconv }
           },
           {
               parents: 1,
               interior: {
-                          x2: [
-                                { 
-                                  Parachain: parachain,
-                                },
-                                beneficiary
-                              ]
+                          // x2: [
+                          //       { 
+                          //         Parachain: parachain,
+                          //       },
+                          //       beneficiary
+                          //     ]
                         }
           },
           (new BN(1000000000) )
@@ -1302,7 +1267,7 @@ const transferFromPhalaToParachain = async (token, originParachain, parachain, a
                 // else if (method==="Deposited"  && section==="currencies")  txResult +=` Deposited ${JSON.parse(data[0]).token} to ${data[1]}  ${_token}:${ethers.utils.formatUnits(ethers.BigNumber.from(`${data[2]}`),12)}`;
             });
             
-            txAssetPhalaToParachain();
+            txAssetBasiliskToParachain();
           }
           
       });
@@ -3370,7 +3335,7 @@ export {
           transfer_MultipleAssets_FromParachainToParachain,
           transfer_MOVR_FromParachainToParachain,
           transferFromPhalaToRelay,
-          transferFromPhalaToParachain,
+          transferFromBasiliskToParachain,
           transfer_multiasset,
           transfer_xcKSMtoKSM,
           simpleERC20Transfer,

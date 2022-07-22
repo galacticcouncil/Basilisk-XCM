@@ -2,7 +2,7 @@ import React,{useState,useEffect,  useCallback} from 'react';
 import { 
 			wallet, getBalance, 
 			transferFromRelayToParachain, transferFromParachainToRelay, transferFromPhalaToRelay, tranferFromRelayToRelay, 
-			transfer_Asset_FromParachainToParachain, transferFromPhalaToParachain, transfer_MultipleAssets_FromParachainToParachain,
+			transfer_Asset_FromParachainToParachain, transferFromBasiliskToParachain, transfer_MultipleAssets_FromParachainToParachain,
 			simpleERC20Transfer, getAccountFormatsforAccountI32,
 			transfer_xcKSMtoKSM, transfer_multiasset, transfer_Currency_FromParachainToParachain, transfer_MOVR_FromParachainToParachain,
 			stakeKSMfromKusama, unstakeKSMfromLKSM, getBalanceinKarura, stakeKSMfromMoonriver, stakeKSMfromKintsugi,
@@ -166,6 +166,8 @@ const QuickTrade = ({
 			karuraAlphaSpecs,
 			baseCurrency,
 			originChain,
+			targetChainDestination,
+			originChain,
 			targetChainDestination
 		})
 
@@ -216,6 +218,46 @@ const QuickTrade = ({
 
 							setTransfer_IsSubmiting(false);
 							setInputTranferAmount("");  resetAll();
+						} else if (orginChain==="Basilisk" && targetChainDestination==="Kusama")
+						{
+							console.log(`We are sending KSM from Basilisk to Kusama inputTranferAmount:${amount} sendToAddress:${sendToAddress}`);
+							setTransfer_IsSubmiting(true);
+							setTransactionMessage(`Transfer KSM from Basilisk to Kusama, submitted.`);
+
+							transferFromParachainToRelay("Basilisk", sendToAddress, amount)
+								.then((resolveMsg) => {
+									setTransactionMessage(
+											resolveMsg.map((msg, index) => {
+												return ( <p key={index}>{msg}</p> )
+											})
+									);
+	
+									getAllBalancesAndAccountFormats(polakdotAccountSigner.address, accountList[0]);
+								})
+								.catch((rejectMsg) => console.log(rejectMsg));
+
+							setTransfer_IsSubmiting(false);
+							setInputTranferAmount("");  resetAll();
+						} else if (orginChain==="Karura" && targetChainDestination==="Kusama")
+						{
+							console.log(`We are sending KSM from Karura to Kusama inputTranferAmount:${amount} sendToAddress:${sendToAddress}`);
+							setTransfer_IsSubmiting(true);
+							setTransactionMessage(`Transfer KSM from Karura to Kusama, submitted.`);
+
+							transferFromParachainToRelay("Karura", sendToAddress, amount)
+								.then((resolveMsg) => {
+									setTransactionMessage(
+											resolveMsg.map((msg, index) => {
+												return ( <p key={index}>{msg}</p> )
+											})
+									);
+	
+									getAllBalancesAndAccountFormats(polakdotAccountSigner.address, accountList[0]);
+								})
+								.catch((rejectMsg) => console.log(rejectMsg));
+
+							setTransfer_IsSubmiting(false);
+							setInputTranferAmount("");  resetAll();
 						}
 
 						//#endregion
@@ -225,13 +267,13 @@ const QuickTrade = ({
 					//#region baseCurrency AUSD
 					else if (baseCurrency==="AUSD")
 					{
-						if (orginChain==="Karura" && targetChainDestination==="Phala")
+						if (orginChain==="Karura" && targetChainDestination==="Basilisk")
 						{
 							// console.log(`We are sending AUSD from Karura to Phala inputTranferAmount:${amount} sendToAddress:${sendToAddress}`);
 							setTransfer_IsSubmiting(true);
-							setTransactionMessage(`Transfer AUSD from Karura to Phala, submitted.`);
+							setTransactionMessage(`Transfer AUSD from Karura to Basilisk, submitted.`);
 
-							transfer_Asset_FromParachainToParachain("KUSD", parachainCodes.Karura, parachainCodes.Phala, sendToAddress, amount)
+							transfer_Asset_FromParachainToParachain("KUSD", parachainCodes.Karura, parachainCodes.Basilisk, sendToAddress, amount)
 							.then((resolveMsg) => {
 								setTransactionMessage(
 										resolveMsg.map((msg, index) => {
@@ -246,13 +288,13 @@ const QuickTrade = ({
 							setTransfer_IsSubmiting(false);
 							setInputTranferAmount("");  resetAll();
 						}
-						else if (orginChain==="Phala" && targetChainDestination==="Karura")
+						else if (orginChain==="Basilisk" && targetChainDestination==="Karura")
 						{
 							// console.log(`We are sending AUSD from Phala to Karura inputTranferAmount:${amount} sendToAddress:${sendToAddress}`);
 							setTransfer_IsSubmiting(true);
-							setTransactionMessage(`Transfer AUSD from Phala to Karura, submitted.`);
+							setTransactionMessage(`Transfer AUSD from Basilisk to Karura, submitted.`);
 
-							transferFromPhalaToParachain("KUSD", parachainCodes.Karura, parachainCodes.Karura, sendToAddress, amount)
+							transferFromBasiliskToParachain("KUSD", parachainCodes.Karura, parachainCodes.Karura, sendToAddress, amount)
 							.then((resolveMsg) => {
 								setTransactionMessage(
 										resolveMsg.map((msg, index) => {
@@ -274,7 +316,7 @@ const QuickTrade = ({
 					//#region baseCurrency BSX
 					else if (baseCurrency==="BSX")
 					{
-						if (orginChain==="Basilisk" && targetChainDestination==="Phala")
+						if (orginChain==="Karura" && targetChainDestination==="Basilisk")
 						{
 							console.log(`We are sending BSX from Basilisk to Phala inputTranferAmount:${amount} sendToAddress:${sendToAddress}`);
 							setTransfer_IsSubmiting(true);
@@ -333,90 +375,6 @@ const QuickTrade = ({
 								setInputTranferAmount("");  resetAll();
 							})
 							.catch((rejectMsg) => console.log(rejectMsg));
-						}
-						else if (orginChain==="Phala" && targetChainDestination==="Basilisk")
-						{
-							console.log(`We are sending BSX from Phala to Basilisk inputTranferAmount:${amount} sendToAddress:${sendToAddress}`);
-							setTransfer_IsSubmiting(true);
-							setTransactionMessage(`Transfer BSX from Phala to Basilisk, submitted.`);
-
-							transferFromPhalaToParachain("BSX", parachainCodes.Basilisk, parachainCodes.Basilisk, sendToAddress, amount)
-							.then((resolveMsg) => {
-								setTransactionMessage(
-										resolveMsg.map((msg, index) => {
-											return ( <p key={index}>{msg}</p> )
-										})
-								);
-
-								setTimeout(() => { getROCOCO_AllBalancesAndAccountFormats(polakdotAccountSigner.address, accountList[0]); },10000);
-								setTransfer_IsSubmiting(false);
-								setInputTranferAmount("");  resetAll();
-							})
-							.catch((rejectMsg) => console.log(rejectMsg));
-
-						}
-						else if (orginChain==="Karura" && targetChainDestination==="Basilisk")
-						{
-							console.log(`We are sending BSX from Karura to Basilisk inputTranferAmount:${amount} sendToAddress:${sendToAddress}`);
-							setTransfer_IsSubmiting(true);
-							setTransactionMessage(`Transfer BSX from Karura to Basilisk, submitted.`);
-
-							// transfer_Asset_FromParachainToParachain("BSX", parachainCodes.Karura_Rococo, parachainCodes.Basilisk, sendToAddress, amount)
-							rococo_transfer_Asset_FromParachainToParachain("BSX", parachainCodes.Karura_Rococo, parachainCodes.Basilisk, sendToAddress, amount)
-							.then((resolveMsg) => {
-								setTransactionMessage(
-										resolveMsg.map((msg, index) => {
-											return ( <p key={index}>{msg}</p> )
-										})
-								);
-
-								setTimeout(() => { getROCOCO_AllBalancesAndAccountFormats(polakdotAccountSigner.address, accountList[0]); },10000);
-								setTransfer_IsSubmiting(false);
-								setInputTranferAmount("");  resetAll();
-							})
-							.catch((rejectMsg) => console.log(rejectMsg));
-
-						}
-						else if (orginChain==="Karura" && targetChainDestination==="Phala")
-						{
-							// console.log(`We are sending BSX from Karura to Phala inputTranferAmount:${amount} sendToAddress:${sendToAddress}`);
-							setTransfer_IsSubmiting(true);
-							setTransactionMessage(`Transfer BSX from Karura to Phala, submitted.`);
-
-							rococo_transfer_Asset_FromParachainToParachain("BSX", parachainCodes.Karura_Rococo, parachainCodes.Phala, sendToAddress, amount)
-							.then((resolveMsg) => {
-								setTransactionMessage(
-										resolveMsg.map((msg, index) => {
-											return ( <p key={index}>{msg}</p> )
-										})
-								);
-
-								setTimeout(() => { getROCOCO_AllBalancesAndAccountFormats(polakdotAccountSigner.address, accountList[0]); },10000);
-								setTransfer_IsSubmiting(false);
-								setInputTranferAmount("");  resetAll();
-							})
-							.catch((rejectMsg) => console.log(rejectMsg));
-						}
-						else if (orginChain==="Phala" && targetChainDestination==="Karura")
-						{
-							// console.log(`We are sending BSX from Phala to Karura inputTranferAmount:${amount} sendToAddress:${sendToAddress}`);
-							setTransfer_IsSubmiting(true);
-							setTransactionMessage(`Transfer BSX from Phala to Karura, submitted.`);
-
-							transferFromPhalaToParachain("BSX", parachainCodes.Basilisk, parachainCodes.Karura, sendToAddress, amount)
-							.then((resolveMsg) => {
-								setTransactionMessage(
-										resolveMsg.map((msg, index) => {
-											return ( <p key={index}>{msg}</p> )
-										})
-								);
-
-								setTimeout(() => { getROCOCO_AllBalancesAndAccountFormats(polakdotAccountSigner.address, accountList[0]); },10000);
-								setTransfer_IsSubmiting(false);
-								setInputTranferAmount("");  resetAll();
-							})
-							.catch((rejectMsg) => console.log(rejectMsg));
-
 						}
 
 			}
