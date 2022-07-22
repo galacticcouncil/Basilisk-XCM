@@ -99,6 +99,13 @@ const QuickTrade = ({
 
 	const relayTokenPrecompileAddress = "0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080";  //xcUNIT or xcKSM
 
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		if (relaySpecs.api && karuraAlphaSpecs.api) {
+			setLoading(false);
+		}
+	}, [relaySpecs, karuraAlphaSpecs])
 
 	useEffect(() => {
 		if (accountFormats)
@@ -485,6 +492,7 @@ const QuickTrade = ({
 				<div className="card-header d-block ">
 					<div>
 						<h4 className="fs-36 text-black"  style={{textAlign:"center"}}>XCM Transfer Center</h4>
+						<p>{loading ? 'loading': 'loaded'}</p>
 					</div>
 				</div>
 				<div className="card-body">
@@ -517,7 +525,7 @@ const QuickTrade = ({
 									<div className="col-xl-3"   >
 									</div>
 									<div className="col-xl-6"  style={{marginTop:"20px", backgroundColor:""}}>
-											<button type="button" className="btn btn-outline-primary btn-lg btn-block" disabled={transfer_IsSubmiting}   onClick = {() => transferBalance(tokenSelected, originChainSelected, destinationChainSelected) }>SEND IT</button> 
+											<button type="button" className="btn btn-outline-primary btn-lg btn-block" disabled={transfer_IsSubmiting || loading}   onClick = {() => transferBalance(tokenSelected, originChainSelected, destinationChainSelected) }>SEND IT</button> 
 									</div>
 							</div>
 							<br/>
