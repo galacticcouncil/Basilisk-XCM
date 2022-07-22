@@ -48,9 +48,9 @@ const Markup = ( { setupSpecs, polakdotSignerfunction, polkadtoAccountList, rela
               <Route exact path='/'> 
                    <DEX  setupSpecs={setupSpecs} relaySpecs={relaySpecs} karuraAlphaSpecs={karuraAlphaSpecs} blockHeader={blockHeader}  accountList={accountList}  polakdotAccountSigner={polakdotAccountSigner} /> 
               </Route>
-              <Route exact path='/xcm'> 
+              {/* <Route exact path='/xcm'> 
                      <DEX  setupSpecs={setupSpecs} relaySpecs={relaySpecs} karuraAlphaSpecs={karuraAlphaSpecs} blockHeader={blockHeader}  accountList={accountList}  polakdotAccountSigner={polakdotAccountSigner} /> 
-              </Route>
+              </Route> */}
 
             </Switch> 
           </div>

@@ -146,6 +146,10 @@ const DEX = ({ setupSpecs, relaySpecs, karuraAlphaSpecs, blockHeader, accountLis
 
 			if (ecosystem==="Kusama")
 			{
+				console.log('selectedOriginChainfunction', {
+					address: polakdotAccountSigner.address,
+					accountList
+				})
 				const balanceObj = await getAllBalancesAndAccountFormats(polakdotAccountSigner.address, accountList[0]); //accountList[0] is setupSpecs.walletAddress
 				const availableToTransfer = (balanceObj[`${tokenSelected}`])[`${chainString}`];
 				setAvailableAmountToTransfer(availableToTransfer);

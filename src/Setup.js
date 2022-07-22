@@ -2331,7 +2331,7 @@ const setup_SubstrateChain = async (wsURL = 'MoonbaseAlpha') => {
 
 //#region 
 const getAvailableBalance = async (account, token=null, metamaskAccount, network=null) => {
-      if (!token || !account || !metamaskAccount) { console.log("No token or account or metamaskAccount has been provided for getAvailableBalance"); return null }
+      if (!token || !account ) { console.log("No token or account has been provided for getAvailableBalance"); return null }
 
       if ( !KusamaApi || !KaruraApi || !MoonriverApi || !KintsugiApi || !PhalaApi )
       { 
@@ -2348,9 +2348,9 @@ const getAvailableBalance = async (account, token=null, metamaskAccount, network
       // else accounts = getAccountFormatsforAccountI32(account);
 
       //We will use MetaMask loaded account and not the Substrate => H160 and vice versa
-      const moonriverAddress = metamaskAccount;
+      // const moonriverAddress = metamaskAccount;
       const accounts = getAccountFormatsforAccountI32(account);
-      const {kusama_Address, karura_Address, moonriver_Address, kintsugi_Address, khala_Address } = accounts;
+      const {kusama_Address, karura_Address, kintsugi_Address, khala_Address } = accounts;
 
       
       // let response;
@@ -2371,22 +2371,22 @@ const getAvailableBalance = async (account, token=null, metamaskAccount, network
         // console.log(`Karura For account:${karura_Address}  Token: ${token} => ${timestamp}: balance free: ${KaruraBalance} reserved: ${reserved1} frozen: ${frozen1}`);
 
         //Moonriver
-        const balanceMoonriver = await MoonriverApi.query.assets.account("42259045809535163221576417993425387648", moonriverAddress );  //"0xa95b7843825449DC588EC06018B48019D1111000"
-        let MoonriverBalance = null;
-        if (balanceMoonriver.toJSON()) 
-        MoonriverBalance = Number( ethers.utils.formatUnits( balanceMoonriver.toJSON().balance, 12) ).toFixed(4);
+        // const balanceMoonriver = await MoonriverApi.query.assets.account("42259045809535163221576417993425387648", moonriverAddress );  //"0xa95b7843825449DC588EC06018B48019D1111000"
+        // let MoonriverBalance = null;
+        // if (balanceMoonriver.toJSON()) 
+        // MoonriverBalance = Number( ethers.utils.formatUnits( balanceMoonriver.toJSON().balance, 12) ).toFixed(4);
         // console.log(`Moonriver  For account:${moonriverAddress} Token: ${token} => ${timestamp}: balance free: ${MoonriverBalance} `);
 
         //Kintsugi
-        const {free: free3 , reserved: reserved3, frozen: frozen3} = await KintsugiApi.query.tokens.accounts(kintsugi_Address, {Token: token.toLowerCase() }); 
-        const KintsugiBalance =  Number(ethers.utils.formatUnits( free3.toString(), 12)).toFixed(4);
-        // console.log(`Kintsugi  For account:${kintsugi_Address} Token: ${token} => ${timestamp}: balance free: ${KintsugiBalance} `);
+        // const {free: free3 , reserved: reserved3, frozen: frozen3} = await KintsugiApi.query.tokens.accounts(kintsugi_Address, {Token: token.toLowerCase() }); 
+        // const KintsugiBalance =  Number(ethers.utils.formatUnits( free3.toString(), 12)).toFixed(4);
+        // // console.log(`Kintsugi  For account:${kintsugi_Address} Token: ${token} => ${timestamp}: balance free: ${KintsugiBalance} `);
 
         //Phala
-        const Phala_balanceObj = await PhalaApi.query.assets.account( 0,  khala_Address ); 
-        let PhalaBalance = null;
-        if (Phala_balanceObj.toJSON()) 
-        PhalaBalance = Number( ethers.utils.formatUnits( Phala_balanceObj.toJSON().balance, 12) ).toFixed(4);
+        // const Phala_balanceObj = await PhalaApi.query.assets.account( 0,  khala_Address ); 
+        // let PhalaBalance = null;
+        // if (Phala_balanceObj.toJSON()) 
+        // PhalaBalance = Number( ethers.utils.formatUnits( Phala_balanceObj.toJSON().balance, 12) ).toFixed(4);
         // console.log(`Phala For account:${khala_Address} Token: ${token} => ${timestamp}: balance free: ${PhalaBalance}`);
 
         // //Shiden  
@@ -2396,7 +2396,7 @@ const getAvailableBalance = async (account, token=null, metamaskAccount, network
         // ShidenBalance = Number( ethers.utils.formatUnits( balanceShiden.toJSON().balance, 12) ).toFixed(4);
         // console.log(`Shiden  For account:${shiden_Address} Token: ${token} => ${timestamp}: balance free: ${ShidenBalance} `);
 
-        const balances = { token, timestamp: new Date(timestamp).toISOString, Kusama: KusamaBalance,  Karura: KaruraBalance, Moonriver: MoonriverBalance, Kintsugi: KintsugiBalance, Phala: PhalaBalance, Basilisk: null };
+        const balances = { token, timestamp: new Date(timestamp).toISOString, Kusama: KusamaBalance,  Karura: KaruraBalance, Basilisk: null };
         // response = { accountFormats: accounts, token, timestamp: new Date(timestamp).toISOString, Kusama: KusamaBalance,  Karura: KaruraBalance, Moonriver: MoonriverBalance, Kintsugi: KintsugiBalance, Phala: PhalaBalance, Basilisk: null };
         // console.log("getAvailableBalance => response: ", response);
         return {accounts, balances};
@@ -2413,24 +2413,24 @@ const getAvailableBalance = async (account, token=null, metamaskAccount, network
         KaruraBalance = Number( ethers.utils.formatUnits( (balance.free).toString(), 12) ).toFixed(4)
         // console.log(`Now => ${timestamp}: Karura  For account:${karura_Address}   ${token} balance Free: ${KaruraBalance} reserved: ${balance.reserved} frozen: ${balance.frozen} and nonce: ${nonce}`);
       
-        //Moonriver
-        const balanceMoonriver = await MoonriverApi.query.assets.account("10810581592933651521121702237638664357", moonriverAddress );  //"0xa95b7843825449DC588EC06018B48019D1111000"
-        let MoonriverBalance = null;
-        if (balanceMoonriver.toJSON()) 
-        MoonriverBalance = Number( ethers.utils.formatUnits( (balanceMoonriver.toJSON()).balance, 12) ).toFixed(4);
-        // console.log(`Moonriver For account:${moonriverAddress} Token: ${token} => ${timestamp}: balance free: ${MoonriverBalance} `);
+        // //Moonriver
+        // const balanceMoonriver = await MoonriverApi.query.assets.account("10810581592933651521121702237638664357", moonriverAddress );  //"0xa95b7843825449DC588EC06018B48019D1111000"
+        // let MoonriverBalance = null;
+        // if (balanceMoonriver.toJSON()) 
+        // MoonriverBalance = Number( ethers.utils.formatUnits( (balanceMoonriver.toJSON()).balance, 12) ).toFixed(4);
+        // // console.log(`Moonriver For account:${moonriverAddress} Token: ${token} => ${timestamp}: balance free: ${MoonriverBalance} `);
         
-        //Kintsugi
-        const KintsugiBalance = null;
+        // //Kintsugi
+        // const KintsugiBalance = null;
 
-        // Phala
-        const Phala_balanceObj = await PhalaApi.query.assets.account( 1,  khala_Address ); 
-        let PhalaBalance = null;
-        if (Phala_balanceObj.toJSON()) 
-        PhalaBalance = Number( ethers.utils.formatUnits( Phala_balanceObj.toJSON().balance, 12) ).toFixed(4);
+        // // Phala
+        // const Phala_balanceObj = await PhalaApi.query.assets.account( 1,  khala_Address ); 
+        // let PhalaBalance = null;
+        // if (Phala_balanceObj.toJSON()) 
+        // PhalaBalance = Number( ethers.utils.formatUnits( Phala_balanceObj.toJSON().balance, 12) ).toFixed(4);
         // console.log(`Phala  For account:${khala_Address} Token: ${token} => ${timestamp}: balance free: ${PhalaBalance}`);
         
-        const balances = {token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance, Moonriver: MoonriverBalance, Kintsugi: KintsugiBalance, Phala: PhalaBalance, Rococo_Basilisk: null, Rococo_Phala: null, Rococo_Karura: null };
+        const balances = {token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance, };
         // response = { accountFormats: accounts, token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance, Moonriver: MoonriverBalance, Kintsugi: KintsugiBalance, Phala: PhalaBalance, Rococo_Basilisk: null, Rococo_Phala: null, Rococo_Karura: null };
         // console.log("getAvailableBalance => response: ", response);
         return {accounts, balances};
@@ -2445,25 +2445,25 @@ const getAvailableBalance = async (account, token=null, metamaskAccount, network
         const KaruraBalance = Number(ethers.utils.formatUnits( free1.toString(), 18)).toFixed(4);
         // console.log(`Karura For account: ${karura_Address} Token: ${token} => ${timestamp}: balance free: ${KaruraBalance} reserved: ${reserved1} frozen: ${frozen1}`);
 
-        //Moonriver
-        const { nonce, data: balance } = await MoonriverApi.query.system.account(moonriverAddress);   // Retrieve the account balance & nonce via the system module
-        // console.log(`Moonriver MOVR balance: `,balance.toJSON())
-        let MoonriverBalance = null;
-        if (balance) 
-        MoonriverBalance = Number( ethers.utils.formatUnits( (balance.toJSON()).free, 18) ).toFixed(4);
-        // console.log(`Moonriver For account:${moonriverAddress} Token: ${token} => ${timestamp}: balance free: ${MoonriverBalance} `);
+        // //Moonriver
+        // const { nonce, data: balance } = await MoonriverApi.query.system.account(moonriverAddress);   // Retrieve the account balance & nonce via the system module
+        // // console.log(`Moonriver MOVR balance: `,balance.toJSON())
+        // let MoonriverBalance = null;
+        // if (balance) 
+        // MoonriverBalance = Number( ethers.utils.formatUnits( (balance.toJSON()).free, 18) ).toFixed(4);
+        // // console.log(`Moonriver For account:${moonriverAddress} Token: ${token} => ${timestamp}: balance free: ${MoonriverBalance} `);
 
-        //Kintsugi
-        const KintsugiBalance = null;
+        // //Kintsugi
+        // const KintsugiBalance = null;
 
-        // Phala
-        const Phala_balanceObj = await PhalaApi.query.assets.account( 6,  khala_Address ); 
-        let PhalaBalance = null;
-        if (Phala_balanceObj.toJSON()) 
-        PhalaBalance = Number( ethers.utils.formatUnits( Phala_balanceObj.toJSON().balance, 18) ).toFixed(4);
-        // console.log(`Phala  For account:${khala_Address} Token: ${token} => ${timestamp}: balance free: ${PhalaBalance}`);
+        // // Phala
+        // const Phala_balanceObj = await PhalaApi.query.assets.account( 6,  khala_Address ); 
+        // let PhalaBalance = null;
+        // if (Phala_balanceObj.toJSON()) 
+        // PhalaBalance = Number( ethers.utils.formatUnits( Phala_balanceObj.toJSON().balance, 18) ).toFixed(4);
+        // // console.log(`Phala  For account:${khala_Address} Token: ${token} => ${timestamp}: balance free: ${PhalaBalance}`);
         
-        const balances = { token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance, Moonriver: MoonriverBalance, Kintsugi: KintsugiBalance, Phala: PhalaBalance, Rococo_Basilisk: null, Rococo_Phala: null, Rococo_Karura: null  };
+        const balances = { token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance,  };
         // response = { accountFormats: accounts, token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance, Moonriver: MoonriverBalance, Kintsugi: KintsugiBalance, Phala: PhalaBalance, Rococo_Basilisk: null, Rococo_Phala: null, Rococo_Karura: null  };
         // console.log("getAvailableBalance => response: ", response);
         return {accounts, balances};
@@ -2478,24 +2478,24 @@ const getAvailableBalance = async (account, token=null, metamaskAccount, network
         const KaruraBalance = Number(ethers.utils.formatUnits( free1.toString(), 12)).toFixed(4);
         // console.log(`***** Karura For account: ${karura_Address} Token: ${token} => ${timestamp}: balance free: ${KaruraBalance} reserved: ${reserved1} frozen: ${frozen1}`);
 
-        //Moonriver
-        const balanceMoonriver = await MoonriverApi.query.assets.account("214920334981412447805621250067209749032", moonriverAddress );  //"0xa95b7843825449DC588EC06018B48019D1111000"
-        let MoonriverBalance = null;
-        if (balanceMoonriver.toJSON()) 
-        MoonriverBalance = Number( ethers.utils.formatUnits( balanceMoonriver.toJSON().balance, 12) ).toFixed(4);
-        // console.log(`Moonriver For account:${moonriverAddress} Token: ${token} => ${timestamp}: balance free: ${MoonriverBalance} `);
+        // //Moonriver
+        // const balanceMoonriver = await MoonriverApi.query.assets.account("214920334981412447805621250067209749032", moonriverAddress );  //"0xa95b7843825449DC588EC06018B48019D1111000"
+        // let MoonriverBalance = null;
+        // if (balanceMoonriver.toJSON()) 
+        // MoonriverBalance = Number( ethers.utils.formatUnits( balanceMoonriver.toJSON().balance, 12) ).toFixed(4);
+        // // console.log(`Moonriver For account:${moonriverAddress} Token: ${token} => ${timestamp}: balance free: ${MoonriverBalance} `);
 
-        //Kintsugi
-        const KintsugiBalance = null;
+        // //Kintsugi
+        // const KintsugiBalance = null;
 
-        // Phala
-        const Phala_balanceObj = await PhalaApi.query.assets.account( 4,  khala_Address ); 
-        let PhalaBalance = null;
-        if (Phala_balanceObj.toJSON()) 
-        PhalaBalance = Number( ethers.utils.formatUnits( Phala_balanceObj.toJSON().balance, 12) ).toFixed(4);
-        // console.log(`Phala  For account:${khala_Address} Token: ${token} => ${timestamp}: balance free: ${PhalaBalance}`);
+        // // Phala
+        // const Phala_balanceObj = await PhalaApi.query.assets.account( 4,  khala_Address ); 
+        // let PhalaBalance = null;
+        // if (Phala_balanceObj.toJSON()) 
+        // PhalaBalance = Number( ethers.utils.formatUnits( Phala_balanceObj.toJSON().balance, 12) ).toFixed(4);
+        // // console.log(`Phala  For account:${khala_Address} Token: ${token} => ${timestamp}: balance free: ${PhalaBalance}`);
         
-        const balances = { token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance, Moonriver: MoonriverBalance, Kintsugi: KintsugiBalance, Phala: PhalaBalance, Rococo_Basilisk: null, Rococo_Phala: null, Rococo_Karura: null  };
+        const balances = { token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance, };
         // response = { accountFormats: accounts, token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance, Moonriver: MoonriverBalance, Kintsugi: KintsugiBalance, Phala: PhalaBalance, Rococo_Basilisk: null, Rococo_Phala: null, Rococo_Karura: null  };
         // console.log("getAvailableBalance => response: ", response);
         return {accounts, balances};
@@ -2510,22 +2510,22 @@ const getAvailableBalance = async (account, token=null, metamaskAccount, network
         const KaruraBalance = Number(ethers.utils.formatUnits( free1.toString(), 12)).toFixed(4);
         console.log(`Karura For account: ${karura_Address} Token: ${token} => ${timestamp}: balance free: ${KaruraBalance} reserved: ${reserved1} frozen: ${frozen1}`);
 
-        //Moonriver
-        const balanceMoonriver = await MoonriverApi.query.assets.account("175400718394635817552109270754364440562", moonriverAddress );  //"0xa95b7843825449DC588EC06018B48019D1111000"
-        let MoonriverBalance = null;
-        if (balanceMoonriver.toJSON()) 
-        MoonriverBalance = Number( ethers.utils.formatUnits( balanceMoonriver.toJSON().balance, 12) ).toFixed(4);
-        // console.log(`Moonriver For account:${moonriverAddress} Token: ${token} => ${timestamp}: balance free: ${MoonriverBalance} `);
+        // //Moonriver
+        // const balanceMoonriver = await MoonriverApi.query.assets.account("175400718394635817552109270754364440562", moonriverAddress );  //"0xa95b7843825449DC588EC06018B48019D1111000"
+        // let MoonriverBalance = null;
+        // if (balanceMoonriver.toJSON()) 
+        // MoonriverBalance = Number( ethers.utils.formatUnits( balanceMoonriver.toJSON().balance, 12) ).toFixed(4);
+        // // console.log(`Moonriver For account:${moonriverAddress} Token: ${token} => ${timestamp}: balance free: ${MoonriverBalance} `);
 
-        //Kintsugi
-        const {free: free3 , reserved: reserved3, frozen: frozen3} = await KintsugiApi.query.tokens.accounts(kintsugi_Address, {Token: token.toLowerCase() }); 
-        const KintsugiBalance =  Number(ethers.utils.formatUnits( free3.toString(), 12)).toFixed(4);
-        // console.log(`Kintsugi For account:${kintsugi_Address} Token: ${token} => ${timestamp}: balance free: ${KintsugiBalance} `);
+        // //Kintsugi
+        // const {free: free3 , reserved: reserved3, frozen: frozen3} = await KintsugiApi.query.tokens.accounts(kintsugi_Address, {Token: token.toLowerCase() }); 
+        // const KintsugiBalance =  Number(ethers.utils.formatUnits( free3.toString(), 12)).toFixed(4);
+        // // console.log(`Kintsugi For account:${kintsugi_Address} Token: ${token} => ${timestamp}: balance free: ${KintsugiBalance} `);
             
-        // Phala
-        const PhalaBalance = null
+        // // Phala
+        // const PhalaBalance = null
         
-        const balances = { token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance, Moonriver: MoonriverBalance, Kintsugi: KintsugiBalance, Phala: PhalaBalance, Rococo_Basilisk: null, Rococo_Phala: null, Rococo_Karura: null  };
+        const balances = { token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance, };
         // response = { accountFormats: accounts, token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance, Moonriver: MoonriverBalance, Kintsugi: KintsugiBalance, Phala: PhalaBalance, Rococo_Basilisk: null, Rococo_Phala: null, Rococo_Karura: null  };
         // console.log("getAvailableBalance => response: ", response);
         return {accounts, balances };
@@ -2540,22 +2540,22 @@ const getAvailableBalance = async (account, token=null, metamaskAccount, network
         const KaruraBalance = Number(ethers.utils.formatUnits( free1.toString(), 8)).toFixed(4);
         // console.log(`Karura For account: ${karura_Address} Token: ${token} => ${timestamp}: balance free: ${KaruraBalance} reserved: ${reserved1} frozen: ${frozen1}`);
 
-        //Moonriver
-        const balanceMoonriver = await MoonriverApi.query.assets.account("328179947973504579459046439826496046832", moonriverAddress );  //"0xa95b7843825449DC588EC06018B48019D1111000"
-        let MoonriverBalance = null;
-        if (balanceMoonriver.toJSON()) 
-        MoonriverBalance = Number( ethers.utils.formatUnits( balanceMoonriver.toJSON().balance, 8) ).toFixed(4);
-        // console.log(`Moonriver For account:${moonriverAddress} Token: ${token} => ${timestamp}: balance free: ${MoonriverBalance} `);
+        // //Moonriver
+        // const balanceMoonriver = await MoonriverApi.query.assets.account("328179947973504579459046439826496046832", moonriverAddress );  //"0xa95b7843825449DC588EC06018B48019D1111000"
+        // let MoonriverBalance = null;
+        // if (balanceMoonriver.toJSON()) 
+        // MoonriverBalance = Number( ethers.utils.formatUnits( balanceMoonriver.toJSON().balance, 8) ).toFixed(4);
+        // // console.log(`Moonriver For account:${moonriverAddress} Token: ${token} => ${timestamp}: balance free: ${MoonriverBalance} `);
 
-        //Kintsugi
-        const {free: free3 , reserved: reserved3, frozen: frozen3} = await KintsugiApi.query.tokens.accounts(kintsugi_Address, {Token: token.toLowerCase() }); 
-        const KintsugiBalance =  Number(ethers.utils.formatUnits( free3.toString(), 8)).toFixed(4);
-        // console.log(`Kintsugi For account:${kintsugi_Address} Token: ${token} => ${timestamp}: balance free: ${KintsugiBalance} `);
+        // //Kintsugi
+        // const {free: free3 , reserved: reserved3, frozen: frozen3} = await KintsugiApi.query.tokens.accounts(kintsugi_Address, {Token: token.toLowerCase() }); 
+        // const KintsugiBalance =  Number(ethers.utils.formatUnits( free3.toString(), 8)).toFixed(4);
+        // // console.log(`Kintsugi For account:${kintsugi_Address} Token: ${token} => ${timestamp}: balance free: ${KintsugiBalance} `);
             
-        // Phala
-        const PhalaBalance = null
+        // // Phala
+        // const PhalaBalance = null
         
-        const balances = { token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance, Moonriver: MoonriverBalance, Kintsugi: KintsugiBalance, Phala: PhalaBalance, Rococo_Basilisk: null, Rococo_Phala: null, Rococo_Karura: null  };
+        const balances = { token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance,};
         // response = { accountFormats: accounts, token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance, Moonriver: MoonriverBalance, Kintsugi: KintsugiBalance, Phala: PhalaBalance, Rococo_Basilisk: null, Rococo_Phala: null, Rococo_Karura: null  };
         // console.log("getAvailableBalance => response: ", response);
         return {accounts, balances };
@@ -2571,23 +2571,23 @@ const getAvailableBalance = async (account, token=null, metamaskAccount, network
         // console.log(`Karura For account: ${karura_Address} Token: ${token} => ${timestamp}: balance free: ${KaruraBalance} reserved: ${reserved1} frozen: ${frozen1}`);
 
         //Moonriver
-        const balanceMoonriver = await MoonriverApi.query.assets.account("189307976387032586987344677431204943363", moonriverAddress );  //"0xa95b7843825449DC588EC06018B48019D1111000"
-        let MoonriverBalance = null;
-        if (balanceMoonriver.toJSON()) 
-        MoonriverBalance = Number( ethers.utils.formatUnits( balanceMoonriver.toJSON().balance, 12) ).toFixed(4);
-        // console.log(`Moonriver For account:${moonriverAddress} Token: ${token} => ${timestamp}: balance free: ${MoonriverBalance} `);
+        // const balanceMoonriver = await MoonriverApi.query.assets.account("189307976387032586987344677431204943363", moonriverAddress );  //"0xa95b7843825449DC588EC06018B48019D1111000"
+        // let MoonriverBalance = null;
+        // if (balanceMoonriver.toJSON()) 
+        // MoonriverBalance = Number( ethers.utils.formatUnits( balanceMoonriver.toJSON().balance, 12) ).toFixed(4);
+        // // console.log(`Moonriver For account:${moonriverAddress} Token: ${token} => ${timestamp}: balance free: ${MoonriverBalance} `);
 
-        //Kintsugi
-        const KintsugiBalance =  null;
+        // //Kintsugi
+        // const KintsugiBalance =  null;
             
-        // Phala
-        const { nonce, data: balance } = await PhalaApi.query.system.account(khala_Address);   // Retrieve the account balance & nonce via the system module
-        let PhalaBalance = null;
-        if (balance) 
-        PhalaBalance = Number( ethers.utils.formatUnits( (balance.free).toString(), 12) ).toFixed(4)
+        // // Phala
+        // const { nonce, data: balance } = await PhalaApi.query.system.account(khala_Address);   // Retrieve the account balance & nonce via the system module
+        // let PhalaBalance = null;
+        // if (balance) 
+        // PhalaBalance = Number( ethers.utils.formatUnits( (balance.free).toString(), 12) ).toFixed(4)
         // console.log(`Now => ${timestamp}: Phala  For account:${khala_Address} ${token} balance Free: ${PhalaBalance}`);
         
-        const balances = { token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance, Moonriver: MoonriverBalance, Kintsugi: KintsugiBalance, Phala: PhalaBalance, Rococo_Basilisk: null, Rococo_Phala: null, Rococo_Karura: null  };
+        const balances = { token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance,};
         // response = { accountFormats: accounts, token, timestamp: new Date(timestamp).toISOString, Kusama: null,  Karura: KaruraBalance, Moonriver: MoonriverBalance, Kintsugi: KintsugiBalance, Phala: PhalaBalance, Rococo_Basilisk: null, Rococo_Phala: null, Rococo_Karura: null  };
         // console.log("getAvailableBalance => response: ", response);
         return {accounts, balances };

@@ -6,19 +6,33 @@ export const chainOptions = [
   { 
     value: 'Kusama', 
     label: 'Kusama', 
-    allowedChains: ['Basilisk'],
+    allowedChains: ['Basilisk', 'Karura'],
     allowedTokens: {
-      from: ['KSM', 'BSX'],
-      to: ['KSM', 'BSX']
+      // from elsewhere to Kusama
+      from: {
+        'Basilisk': ['KSM'],
+        'Karura': ['KSM'],
+      },
+      // to elsewhere from Kusama
+      to: {
+        'Basilisk': ['KSM'],
+        'Karura': ['KSM'],
+      },
     }
   },
   { 
     value: 'Karura', 
     label: 'Karura', 
-    allowedChains: ['Basilisk'],
+    allowedChains: ['Basilisk', 'Kusama'],
     allowedTokens: {
-      from: ['aUSD', 'BSX', 'KSM'],
-      to: ['aUSD', 'BSX', 'KSM']
+      from: {
+        'Basilisk': ['aUSD', 'BSX'],
+        'Kusama': ['KSM'],
+      },
+      to: {
+        'Basilisk': ['aUSD', 'BSX'],
+        'Kusama': ['KSM'],
+      },
     }
   },
   { 
@@ -26,8 +40,14 @@ export const chainOptions = [
     label: 'Basilisk', 
     allowedChains: ['Kusama', 'Karura'],
     allowedTokens: {
-      from: ['aUSD', 'KSM', 'BSX'],
-      to: ['aUSD', 'KSM', 'BSX']
+      from: {
+        'Karura': ['aUSD', 'BSX'],
+        'Kusama': ['KSM'],
+      },
+      to: {
+        'Karura': ['aUSD', 'BSX'],
+        'Kusama': ['KSM'],
+      },
     }
   }
 ];
@@ -63,11 +83,15 @@ export const Form = ({
 
     setForm(form => {
       const toChain = chainOptions.find(chain => form.toChain && chain.value == form.toChain.value);
-
-      const resetToChain = fromChain && !fromChain.allowedChains.includes(form.toChain.value);
-      const resetAsset = (
-        fromChain.allowedTokens.from.includes(form.asset && form.asset.value)
-        || toChain && toChain.allowedTokens.to.includes(form.asset && form.asset.value)
+      const resetToChain = fromChain && toChain && !fromChain.allowedChains.includes(toChain.value);
+      
+      const resetAsset = !(
+        fromChain
+        && toChain
+        && fromChain.allowedTokens.to[toChain.value]
+        && fromChain.allowedTokens.to[toChain.value].includes(form.asset)
+        && toChain.allowedChains.from[fromChain.value]
+        && toChain.allowedChains.from[fromChain.value].includes(form.asset)
       );
 
       console.log('handleFromChainChange', {
@@ -90,11 +114,23 @@ export const Form = ({
 
     setForm(form => {
       const fromChain = chainOptions.find(chain => form.fromChain && chain.value == form.fromChain.value);
+      const resetFromChain = fromChain && !toChain.allowedChains.includes(fromChain.value);
+      
+      // const resetAsset = (
+      //   // doesnt make sense to validate 'from' tokens without knowing where they are going
+      //   // so we dont reset the asset unless both chains are selected
+      //   toChain
+      //   && toChain.allowedTokens.from[fromChain.value].includes(form.asset && form.asset.value)
+      //   || fromChain && fromChain.allowedTokens.to[toChain.value].includes(form.asset && form.asset.value)
+      // );
 
-      const resetFromChain = form.fromChain && !toChain.allowedChains.includes(form.fromChain.value);
-      const resetAsset = (
-        toChain.allowedTokens.to.includes(form.asset && form.asset.value)
-        || fromChain && fromChain.allowedTokens.to.includes(form.asset && form.asset.value)
+      const resetAsset = !(
+        fromChain
+        && toChain
+        && toChain.allowedTokens.from[fromChain.value]
+        && toChain.allowedTokens.from[fromChain.value].includes(form.asset)
+        && fromChain.allowedChains.to[toChain.value]
+        && fromChain.allowedChains.to[toChain.value].includes(form.asset)
       );
 
       console.log('handleToChainChange', {
@@ -129,8 +165,44 @@ export const Form = ({
       const toChain = chainOptions.find(chain => form.toChain && chain.value == form.toChain.value);
       const fromChain = chainOptions.find(chain => form.fromChain && chain.value == form.fromChain.value);
 
-      const resetFromChain = fromChain  && !fromChain.allowedTokens.from.includes(asset.value);
-      const resetToChain = toChain && !toChain.allowedTokens.to.includes(asset.value);
+      // const resetFromChain = (
+      //   // doesnt make sense to validate 'from' tokens without knowing where they are going
+      //   // so we dont reset the asset unless both chains are selected
+      //   toChain
+      //   && fromChain.allowedTokens.to[toChain.value].includes(form.asset && form.asset.value)
+      //   || toChain && toChain.allowedTokens.from[fromChain.value].includes(form.asset && form.asset.value)
+      // );
+
+      if (!fromChain || !toChain) return {
+        ...form,
+        asset
+      }
+
+      // TODO: check if any any other 'to' can be used to send the asset, 
+      const resetFromChain = !(
+        fromChain
+        && toChain
+        && fromChain.allowedTokens.to[toChain.value]
+        && fromChain.allowedTokens.to[toChain.value].includes(asset.value)
+      );
+
+      // const resetToChain = (
+      //   // doesnt make sense to validate 'from' tokens without knowing where they are going
+      //   // so we dont reset the asset unless both chains are selected
+      //   toChain
+      //   && toChain.allowedTokens.from[fromChain.value].includes(form.asset && form.asset.value)
+      //   || fromChain && fromChain.allowedTokens.to[toChain.value].includes(form.asset && form.asset.value)
+      // )
+      
+      // TODO: check if any any other 'from' can be used to send the asset, same for 'to'
+      const resetToChain = !(
+        fromChain
+        && toChain
+        && toChain.allowedTokens.from[fromChain.value]
+        && toChain.allowedTokens.from[fromChain.value].includes(asset.value)
+        // && fromChain.allowedChains.to[toChain.value]
+        // && fromChain.allowedChains.to[toChain.value].includes(form.asset)
+      );
 
       console.log('handleAssetChange', {
         resetFromChain,
@@ -145,6 +217,38 @@ export const Form = ({
       };
     })
   }, []);
+
+  // TODO: we can allow selecting an option which was meant to be disabled, but it should reset either from or to chains
+  const isOptionDisabled = useCallback((option) => {
+    const toChain = chainOptions.find(chain => form.toChain && chain.value == form.toChain.value);
+    const fromChain = chainOptions.find(chain => form.fromChain && chain.value == form.fromChain.value);
+    
+    console.log('isOptionDisabled', { fromChain, toChain });
+
+    if (!fromChain || !toChain) return false;
+
+    const isOptionDisabledFrom = fromChain
+      ? !(toChain
+        && fromChain.allowedTokens.to[toChain.value]
+        && fromChain.allowedTokens.to[toChain.value].includes(option.value))
+      : false
+    
+    const isOptionDisabledTo = toChain
+    ? !(fromChain
+      && toChain.allowedTokens.from[fromChain.value]
+      && toChain.allowedTokens.from[fromChain.value].includes(option.value))
+    : false
+
+    console.log('isOptionDisabled', {
+      isOptionDisabledFrom,
+      isOptionDisabledTo,
+      value: option.value
+    })
+
+    const isOptionDisabled = isOptionDisabledFrom || isOptionDisabledTo;
+
+    return isOptionDisabled;
+  }, [form]);
 
   useEffect(() => {
     onOriginChainSelected(form.fromChain && form.fromChain.value);
@@ -207,6 +311,7 @@ export const Form = ({
                 value={form.asset}
                 onChange={handleAssetChange}
                 options={assetOptions}
+                isOptionDisabled={isOptionDisabled}
               ></Select>
             </div>
           </div>
