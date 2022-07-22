@@ -151,10 +151,15 @@ const QuickTrade = ({
 		const orginChain = originChain;
 		const targetChainDestination = targetChain;
 		// console.log(`ntt54_QuickTrade.js transferBalance => selectedAction: ${selectedAction}`);
-		// console.log(`XCMTransfer Begins transferBalance baseCurrency: `,baseCurrency,` sendToAddress: `,sendToAddress,`  inputTranferAmount: `,inputTranferAmount, ` orginChain: ${orginChain} targetChainDestination:${targetChainDestination}`);
-		
+		console.log(`XCMTransfer Begins transferBalance baseCurrency: `,baseCurrency,` sendToAddress: `,sendToAddress,`  inputTranferAmount: `,inputTranferAmount, ` orginChain: ${orginChain} targetChainDestination:${targetChainDestination}`);
+		console.log('xcm debug', {
+			amount, sendToAddress,
+			setupSpecs: setupSpecs.wallet,
+			relaySpecs,
+			karuraAlphaSpecs
+		})
 
-		if (amount!=="0" && sendToAddress!==""   && setupSpecs.wallet && relaySpecs.api && karuraAlphaSpecs.api)
+		if (amount!=="0" && sendToAddress!=="" && relaySpecs.api && karuraAlphaSpecs.api)
 		{
              
 			//Unstaking KSM from LKSM at Karura
@@ -1660,7 +1665,7 @@ const QuickTrade = ({
 									<div className="col-xl-3"   >
 									</div>
 									<div className="col-xl-6"  style={{marginTop:"20px", backgroundColor:""}}>
-											<button type="button" className="btn btn-outline-primary btn-lg btn-block" disabled={transfer_IsSubmiting}   onClick = {() => transferBalance(tokenSelected, originChainSelected, destinationChainSelected) }>SEND</button> 
+											<button type="button" className="btn btn-outline-primary btn-lg btn-block" disabled={transfer_IsSubmiting}   onClick = {() => transferBalance(tokenSelected, originChainSelected, destinationChainSelected) }>SEND IT</button> 
 									</div>
 							</div>
 							<br/>

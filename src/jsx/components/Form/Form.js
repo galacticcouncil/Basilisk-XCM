@@ -85,13 +85,17 @@ export const Form = ({
       const toChain = chainOptions.find(chain => form.toChain && chain.value == form.toChain.value);
       const resetToChain = fromChain && toChain && !fromChain.allowedChains.includes(toChain.value);
       
-      const resetAsset = !(
+      if (!toChain || !fromChain) return {
+        ...form,
         fromChain
-        && toChain
+      }
+
+      const resetAsset = !(
+        form.asset
         && fromChain.allowedTokens.to[toChain.value]
-        && fromChain.allowedTokens.to[toChain.value].includes(form.asset)
-        && toChain.allowedChains.from[fromChain.value]
-        && toChain.allowedChains.from[fromChain.value].includes(form.asset)
+        && fromChain.allowedTokens.to[toChain.value].includes(form.asset.value)
+        && toChain.allowedTokens.from[fromChain.value]
+        && toChain.allowedTokens.from[fromChain.value].includes(form.asset.value)
       );
 
       console.log('handleFromChainChange', {
@@ -115,26 +119,24 @@ export const Form = ({
     setForm(form => {
       const fromChain = chainOptions.find(chain => form.fromChain && chain.value == form.fromChain.value);
       const resetFromChain = fromChain && !toChain.allowedChains.includes(fromChain.value);
-      
-      // const resetAsset = (
-      //   // doesnt make sense to validate 'from' tokens without knowing where they are going
-      //   // so we dont reset the asset unless both chains are selected
-      //   toChain
-      //   && toChain.allowedTokens.from[fromChain.value].includes(form.asset && form.asset.value)
-      //   || fromChain && fromChain.allowedTokens.to[toChain.value].includes(form.asset && form.asset.value)
-      // );
+    
+      if (!toChain || !fromChain) return {
+        ...form,
+        toChain
+      }
 
       const resetAsset = !(
-        fromChain
-        && toChain
+        form.asset
         && toChain.allowedTokens.from[fromChain.value]
-        && toChain.allowedTokens.from[fromChain.value].includes(form.asset)
-        && fromChain.allowedChains.to[toChain.value]
-        && fromChain.allowedChains.to[toChain.value].includes(form.asset)
+        && toChain.allowedTokens.from[fromChain.value].includes(form.asset.value)
+        && fromChain.allowedTokens.to[toChain.value]
+        && fromChain.allowedTokens.to[toChain.value].includes(form.asset.value)
       );
 
       console.log('handleToChainChange', {
         toChain,
+        fromChain,
+        asset: form.asset,
         resetAsset,
         resetFromChain
       })
