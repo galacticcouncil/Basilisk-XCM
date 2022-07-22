@@ -27,9 +27,9 @@ const Header = ({ polakdotSignerfunction, polkadtoAccountList, evm_api_state, ac
   },[evm_api_state])
 
     
-  useEffect(() => {
-    setMetaMaskAccountsDropDown( refreshMetaMaskAccountsList(accountList) );
-  },[accountList])
+  // useEffect(() => {
+  //   setMetaMaskAccountsDropDown( refreshMetaMaskAccountsList(accountList) );
+  // },[accountList])
 
   //#region Polkadot Accounts Drop List
   const refreshPolkadotAccountsList = useCallback ( (tokens) => {
@@ -80,20 +80,20 @@ const Header = ({ polakdotSignerfunction, polkadtoAccountList, evm_api_state, ac
 
 
   //#region MetaMask Accounts Drop List
-  const refreshMetaMaskAccountsList = (tokens) =>{
-    if (tokens)
-    {
-      return tokens.map((token, index) => {
-        return (
-          <Dropdown.Item key={index}  onClick={() => { 
-            setMetaMaskAccount(token);
-            console.log(`MetaMask Account is: ${token}`);
-        } }>{token}</Dropdown.Item>
-        )
-      });
-    }
-    else return <>Loading data...</> 
-  }
+  // const refreshMetaMaskAccountsList = (tokens) =>{
+  //   if (tokens)
+  //   {
+  //     return tokens.map((token, index) => {
+  //       return (
+  //         <Dropdown.Item key={index}  onClick={() => { 
+  //           setMetaMaskAccount(token);
+  //           console.log(`MetaMask Account is: ${token}`);
+  //       } }>{token}</Dropdown.Item>
+  //       )
+  //     });
+  //   }
+  //   else return <>Loading data...</> 
+  // }
   
 
   return (
@@ -109,12 +109,12 @@ const Header = ({ polakdotSignerfunction, polkadtoAccountList, evm_api_state, ac
                 </li>
             </div>
 
-            <div className="header-left">
+            {/* <div className="header-left">
                 <Dropdown className="weather-btn mb-2" style={{backgroundColor:"#171622", fontSize:"14px", marginTop:"20px" }}>
                     <span className="fs-22 font-w650 d-flex" style={{color: dropdowncolor,  backgroundColor:"#171622"}}><i className="fa fa-google-wallet me-3 ms-3">MetaMask</i></span>
                     <span className="fs-14 font-w650 d-flex" style={{color: dropdowncolor, backgroundColor:"#171622", marginRight:"20px"}}>{accountList? accountList : "Sign in to Metamask"}</span>
                 </Dropdown>  
-            </div>
+            </div> */}
             <div className="header-left">
                 <ul className="navbar-nav  main-notification">
                    {polokadotAccountMenu}

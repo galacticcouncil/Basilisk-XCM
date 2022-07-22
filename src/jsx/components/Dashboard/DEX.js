@@ -5,7 +5,7 @@ import { Card,  Tab, Nav } from "react-bootstrap";
 import QuickTrade from '../Boltz/Home/ntt54_QuickTrade';
 import UI from '../Boltz/Home/ntt54_UI';
 import BasiliskUI from '../Boltz/Home/ntt54_RococoBasilisk_UI';
-
+import { Form } from '../Form/Form';
 
 import { getAvailableBalance, getRococo_AvailableBalance } from '../../../Setup.js';
 
@@ -13,8 +13,8 @@ import { getAvailableBalance, getRococo_AvailableBalance } from '../../../Setup.
 const DEX = ({ setupSpecs, relaySpecs, karuraAlphaSpecs, blockHeader, accountList, polakdotAccountSigner }) => {
     
 	const [tokenSelected, setTokenSelected] = useState("Token");
-	const [originChainSelected, setOriginChainSelected] = useState("Origin Chain");
-	const [destinationChainSelected, setDestinationChainSelected] = useState("Target Chain");
+	const [originChainSelected, setOriginChainSelected] = useState("Kusama");
+	const [destinationChainSelected, setDestinationChainSelected] = useState("Basilisk");
 	const [targetAccount, setTargetAccount] = useState("");
 
 	const [accountFormats, setAccountFormats] = useState("");
@@ -35,8 +35,8 @@ const DEX = ({ setupSpecs, relaySpecs, karuraAlphaSpecs, blockHeader, accountLis
 	const [rococoBalancesPHA, setRococoBalancesPHA] = useState("");
 	// const [rococoBalancesKAR, setRococoBalancesKAR]  = useState("");
 
-	const [ecosystem, setEcosystem] = useState("Rococo");    //Kusama, Rococo
-
+	const [ecosystem, setEcosystem] = useState("Kusama");    //Kusama, Rococo
+	
 
 
 	const getBalancesAndAccountFormats = async (account, token=null, metamaskAccount=null, network=null ) => {
@@ -189,83 +189,23 @@ const DEX = ({ setupSpecs, relaySpecs, karuraAlphaSpecs, blockHeader, accountLis
 					<div className="row"> 
 
 						{/* LEFT PART OF THE SCREEN START */}
-						<div className="col-xl-6 col-xxl-12">
-							<br/>
+						<div className="col-xl-12">
 
-							<Card>
-								<Card.Body>
-								<div className="custom-tab-1">
-									<Tab.Container defaultActiveKey={"Rococo"}>
-										<Nav as="ul" className="nav-tabs" style={{fontSize:"18px",cursor:"pointer"}}>
-												<Nav.Item as="li">
-													<Nav.Link eventKey="Polkadot" onClick={() => {
-															setEcosystem("Polkadot");
-															resetAll();
-														}
-													}>
-														<i className={`la la-home me-2`} />
-														Polkadot
-													</Nav.Link>
-												</Nav.Item>
+						<Card>
+							<Card.Body>
+								{/* mainnet, not rococo */}
+								{/* <UI resetState={resetState} selectedActionfunction={selectedActionfunction} 
+									resetTargetAccount={resetTargetAccount} destinationChainSelected={destinationChainSelected} originChainSelected={originChainSelected} selectedDestinationChainfunction={selectedDestinationChainfunction} selectedOriginChainfunction={selectedOriginChainfunction} selectedTokenfunction={selectedTokenfunction} setupSpecs={setupSpecs} portfolio={"portfolio"} oracleData={"oracleData"} accountList={accountList} blockHeader={blockHeader} 
+									accountFormats={accountFormats} balancesKSM={balancesKSM} balancesKAR={balancesKAR} balancesMOVR={balancesMOVR} balancesKINT={balancesKINT} balancesPHA={balancesPHA} balancesAUSD={balancesAUSD} balancesKBTC={balancesKBTC}
+								/> */}
 
-										        <Nav.Item as="li">
-													<Nav.Link eventKey="Kusama" onClick={() => {
-															setEcosystem("Kusama");
-															resetAll();
-														}
-													}>
-														<i className={`la la-home me-2`} />
-														Kusama
-													</Nav.Link>
-												</Nav.Item>
-										        <Nav.Item as="li">
-													<Nav.Link eventKey="Rococo" onClick={() => {
-															setEcosystem("Rococo");
-															resetAll();
-														}
-													}>
-														<i className={`la la-home me-2`} />
-														Rococo
-													</Nav.Link>
-												</Nav.Item>
-										</Nav> 
+								<Form 
+									onOriginChainSelected={selectedOriginChainfunction}
+									onDestinationChainSelected={selectedDestinationChainfunction}
+									onAssetSelected={selectedTokenfunction}
+								/>
 
-										<Tab.Content className="pt-4">
-
-											<Tab.Pane eventKey="Kusama">
-												<UI resetState={resetState} selectedActionfunction={selectedActionfunction} 
-													resetTargetAccount={resetTargetAccount} destinationChainSelected={destinationChainSelected} originChainSelected={originChainSelected} selectedDestinationChainfunction={selectedDestinationChainfunction} selectedOriginChainfunction={selectedOriginChainfunction} selectedTokenfunction={selectedTokenfunction} setupSpecs={setupSpecs} portfolio={"portfolio"} oracleData={"oracleData"} accountList={accountList} blockHeader={blockHeader} 
-													accountFormats={accountFormats} balancesKSM={balancesKSM} balancesKAR={balancesKAR} balancesMOVR={balancesMOVR} balancesKINT={balancesKINT} balancesPHA={balancesPHA} balancesAUSD={balancesAUSD} balancesKBTC={balancesKBTC}
-												/>
-											</Tab.Pane>
-
-											<Tab.Pane eventKey="Rococo">
-												<BasiliskUI resetState={resetState} selectedActionfunction={selectedActionfunction}
-													resetTargetAccount={resetTargetAccount} destinationChainSelected={destinationChainSelected} originChainSelected={originChainSelected} selectedDestinationChainfunction={selectedDestinationChainfunction} selectedOriginChainfunction={selectedOriginChainfunction} selectedTokenfunction={selectedTokenfunction} setupSpecs={setupSpecs} 
-													accountList={accountList} blockHeader={blockHeader} 
-													rococoBalancesBSX={rococoBalancesBSX} rococoBalancesPHA={rococoBalancesPHA} 
-												/>
-											</Tab.Pane>
-
-											<Tab.Pane eventKey="Polkadot">
-												<h4>Work in Progress</h4>
-											</Tab.Pane>
-
-										</Tab.Content>
-
-									</Tab.Container>
-
-								</div>
-								</Card.Body>
-							</Card>
-
-						</div>
-						{/* LEFT PART OF THE SCREEN END */}
-
-
-						{/* RIGHT PART OF THE SCREEN START */}
-						<div className="col-xl-6 col-xxl-12">
-						    <QuickTrade 
+								<QuickTrade 
 							    resetAll={resetAll} selectedAction={selectedAction} targetAccount={targetAccount} setupSpecs={setupSpecs} 
 								destinationChainSelected={destinationChainSelected} originChainSelected={originChainSelected} tokenSelected={tokenSelected} 
 								relaySpecs={relaySpecs} karuraAlphaSpecs={karuraAlphaSpecs} blockHeader={blockHeader}  
@@ -274,6 +214,15 @@ const DEX = ({ setupSpecs, relaySpecs, karuraAlphaSpecs, blockHeader, accountLis
 								getAllBalancesAndAccountFormats={getAllBalancesAndAccountFormats}
 								getROCOCO_AllBalancesAndAccountFormats={getROCOCO_AllBalancesAndAccountFormats}
 							/>
+							</Card.Body>
+						</Card>
+						</div>
+						{/* LEFT PART OF THE SCREEN END */}
+
+
+						{/* RIGHT PART OF THE SCREEN START */}
+						<div className="col-xl-12">
+						    
 						</div>
 						{/* RIGHT PART OF THE SCREEN END*/}
 

@@ -73,63 +73,63 @@ function App() {
 
 
   //#region MetaMaskExtenionApp
-  useEffect(() => {
+  // useEffect(() => {
 
-    const enableMetamaskManagement = async () => {
+  //   const enableMetamaskManagement = async () => {
 
-          let provider, mm_wallet, mm_acounts, mm_account, mm_chainId ;
+  //         let provider, mm_wallet, mm_acounts, mm_account, mm_chainId ;
 
-          //#region SETUP PROVIDER AND WALLET WITH METAMASK 
-          const _provider = await detectEthereumProvider();
-          if (_provider) {
-              provider = new ethers.providers.Web3Provider(window.ethereum, "any");   
+  //         //#region SETUP PROVIDER AND WALLET WITH METAMASK 
+  //         const _provider = await detectEthereumProvider();
+  //         if (_provider) {
+  //             provider = new ethers.providers.Web3Provider(window.ethereum, "any");   
 
-              mm_acounts = await _provider.request({ method: 'eth_requestAccounts' });
-              mm_chainId = await _provider.request({ method: 'eth_chainId' });
-              mm_account = mm_acounts[0];
-              mm_wallet = provider.getSigner(); 
-              console.log(`***** MetaMask Accounts *****: `,mm_acounts, ` CHAINID: ${mm_chainId} SELECTED ACOUNT: ${mm_account} mm_wallet: `,mm_wallet);
+  //             mm_acounts = await _provider.request({ method: 'eth_requestAccounts' });
+  //             mm_chainId = await _provider.request({ method: 'eth_chainId' });
+  //             mm_account = mm_acounts[0];
+  //             mm_wallet = provider.getSigner(); 
+  //             console.log(`***** MetaMask Accounts *****: `,mm_acounts, ` CHAINID: ${mm_chainId} SELECTED ACOUNT: ${mm_account} mm_wallet: `,mm_wallet);
               
-              setEvm_Api_State(true);
-              setAccountList(mm_acounts);
-              setWallet(mm_wallet);
-              const _setupSpecs = { wallet: mm_wallet, provider, pair:"", connected: "C", walletAddress: await mm_wallet.getAddress() };
-              setSetupSpecs(_setupSpecs);
+  //             setEvm_Api_State(true);
+  //             setAccountList(mm_acounts);
+  //             setWallet(mm_wallet);
+  //             const _setupSpecs = { wallet: mm_wallet, provider, pair:"", connected: "C", walletAddress: await mm_wallet.getAddress() };
+  //             setSetupSpecs(_setupSpecs);
 
-              _provider.on('chainChanged', async (chainId) => {
-                window.location.reload();
-                const mm_chainId = await _provider.request({ method: 'eth_chainId' });
-                console.log(`***** MetaMask Accounts *****:  CHAINID: ${mm_chainId}`);
-              });
+  //             _provider.on('chainChanged', async (chainId) => {
+  //               window.location.reload();
+  //               const mm_chainId = await _provider.request({ method: 'eth_chainId' });
+  //               console.log(`***** MetaMask Accounts *****:  CHAINID: ${mm_chainId`z}`);
+  //             });
 
-              _provider.on('accountsChanged', async (accounts) => {
-                // Handle the new accounts, or lack thereof. // "accounts" will always be an array, but it can be empty.
-                mm_account = accounts[0];
+  //             _provider.on('accountsChanged', async (accounts) => {
+  //               // Handle the new accounts, or lack thereof. // "accounts" will always be an array, but it can be empty.
+  //               mm_account = accounts[0];
 
-                provider = new ethers.providers.Web3Provider(window.ethereum, "any");   
-                mm_wallet = provider.getSigner(); 
-                console.log(`****** METAMASK ACCOUNT CHANGED EVENT KICKS IN *****  accounts: `,accounts,`  SELECTED ACOUNT: ${mm_account} mm_wallet.getAddress: ${await mm_wallet.getAddress()} mm_wallet: `,mm_wallet);
+  //               provider = new ethers.providers.Web3Provider(window.ethereum, "any");   
+  //               mm_wallet = provider.getSigner(); 
+  //               console.log(`****** METAMASK ACCOUNT CHANGED EVENT KICKS IN *****  accounts: `,accounts,`  SELECTED ACOUNT: ${mm_account} mm_wallet.getAddress: ${await mm_wallet.getAddress()} mm_wallet: `,mm_wallet);
                 
-                setEvm_Api_State(true);
-                setAccountList(accounts);
-                setWallet(mm_wallet);
+  //               setEvm_Api_State(true);
+  //               setAccountList(accounts);
+  //               setWallet(mm_wallet);
 
-                const _setupSpecs = { wallet: mm_wallet, provider, pair:"", connected: "C", walletAddress: await mm_wallet.getAddress() };
-                setSetupSpecs(_setupSpecs);
+  //               const _setupSpecs = { wallet: mm_wallet, provider, pair:"", connected: "C", walletAddress: await mm_wallet.getAddress() };
+  //               setSetupSpecs(_setupSpecs);
 
-              });
+  //             });
 
-          } 
-          else { 
-            console.log('Please install MetaMask!'); 
-            // return { provider: null, wallet: null, account: null };
-          }
-          //#endregion SETUP PROVIDER AND WALLET WITH METAMASK 
+  //         } 
+  //         else { 
+  //           console.log('Please install MetaMask!'); 
+  //           // return { provider: null, wallet: null, account: null };
+  //         }
+  //         //#endregion SETUP PROVIDER AND WALLET WITH METAMASK 
    
-    };
-    enableMetamaskManagement();
+  //   };
+  //   enableMetamaskManagement();
 
-  }, []);   
+  // }, []);   
   //#endregion
 
 

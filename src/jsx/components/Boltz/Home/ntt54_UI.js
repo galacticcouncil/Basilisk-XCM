@@ -8,6 +8,8 @@ import kint100 from '../../../../icons/crypto/kint100.png';
 import pha100 from '../../../../icons/crypto/pha100.png';
 import ausd100 from '../../../../icons/crypto/ausd100.png';
 import kbtc100 from '../../../../icons/crypto/kbtc100.png';
+import { useMountedLayoutEffect } from 'react-table';
+import { useEffectOnce } from 'react-use';
  
 
 
@@ -16,17 +18,17 @@ const QuickTrade = ({
   resetState, balancesKSM, balancesKAR, balancesMOVR, balancesKINT, balancesPHA, balancesAUSD, balancesKBTC, selectedActionfunction,
 }) => {
 
-  const [action, setAction] = useState("");    
-  const [instructionStatus, setInstructionStatus] = useState("");     
+  const [action, setAction] = useState("XCMtransfer");    
+  const [instructionStatus, setInstructionStatus] = useState("Step1");    
 
-  const [stateOfMatrix, setStateOfMatrix] = useState("none");     
-  const [stateOfKSM , setStateOfKSM]  = useState("none");     
-  const [stateOfKAR , setStateOfKAR]  = useState("none");     
-  const [stateOfMOVR, setStateOfMOVR] = useState("none");     
-  const [stateOfKINT, setStateOfKINT] = useState("none");     
-  const [stateOfPHA , setStateOfPHA]  = useState("none");    
-  const [stateOfAUSD, setStateOfAUSD] = useState("none");     
-  const [stateOfKBTC, setStateOfKBTC] = useState("none");     
+  const [stateOfMatrix, setStateOfMatrix] = useState("auto");     
+  const [stateOfKSM , setStateOfKSM]  = useState("auto");     
+  const [stateOfKAR , setStateOfKAR]  = useState("auto");     
+  const [stateOfMOVR, setStateOfMOVR] = useState("auto");     
+  const [stateOfKINT, setStateOfKINT] = useState("auto");     
+  const [stateOfPHA , setStateOfPHA]  = useState("auto");    
+  const [stateOfAUSD, setStateOfAUSD] = useState("auto");     
+  const [stateOfKBTC, setStateOfKBTC] = useState("auto");     
 
 	const [rowKSM, setRowKSM] = useState({opacity: 1, clickable: "" })
 	const [rowKAR, setRowKAR] = useState({opacity: 1, clickable: "" })
@@ -113,26 +115,14 @@ const QuickTrade = ({
     setAction(choice);
     selectedActionfunction(choice);  //Informs XCM Transfer Center
 
-    if (choice==="autostakeKSMtoKarura")
-    {
-      tokenClicked("KSM");
-      setStateOfKAR("none");  setStateOfMOVR("none");  setStateOfKINT("none");  setStateOfPHA("none");  setStateOfAUSD("none"); setStateOfKBTC("none");
-      setInstructionStatus("KSMstaking");
-      setElemKSM((result) => [ result[0], { activebackgroundColor: "#890000", backgroundColorDefault: "#890000", opacity: 1, clickable: "none" }, result[2], result[3], { activebackgroundColor: "#8fcb02", backgroundColorDefault: "#8fcb02", opacity: 0, clickable: "none" } ] );
-
-    }
-    else if (choice==="XCMtransfer")
-    {
-      setStateOfKSM("auto"); setStateOfKAR("auto");  setStateOfMOVR("auto");  setStateOfKINT("auto");  setStateOfPHA("auto");  setStateOfAUSD("auto"); setStateOfKBTC("auto");
-      setInstructionStatus("Step1");
-    }
-    else if (choice==="unstakeKSMfromLKSMatKarura")
-    {
-      setInstructionStatus("KSMunstaking");
-      selectedTokenfunction("LKSM=>KSM")
-      selectedOriginChainfunction("Karura");
-      selectedDestinationChainfunction("Karura");
-    }
+    setStateOfKSM("auto"); 
+    setStateOfKAR("auto");  
+    setStateOfMOVR("auto");  
+    setStateOfKINT("auto");  
+    setStateOfPHA("auto");  
+    setStateOfAUSD("auto"); 
+    setStateOfKBTC("auto");
+    setInstructionStatus("Step1");
 
     setStateOfMatrix("auto");
   }
@@ -193,6 +183,8 @@ const QuickTrade = ({
 
   }
   //#endregion
+
+
 
   //#region
   const KAR_chainTabClicked = (choice) => {
@@ -603,10 +595,10 @@ const QuickTrade = ({
         ]
       );
 
-      setStateOfMatrix("none");
-      setAction("");
-      setInstructionStatus("");
-      setStateOfKSM("none"); setStateOfKAR("none");  setStateOfMOVR("none");  setStateOfKINT("none");  setStateOfPHA("none");  setStateOfAUSD("none"); setStateOfKBTC("none");
+      setStateOfMatrix("auto");
+      setAction("XCMTransfer");
+      setInstructionStatus("Step1");
+      setStateOfKSM("auto"); setStateOfKAR("auto");  setStateOfMOVR("auto");  setStateOfKINT("auto");  setStateOfPHA("auto");  setStateOfAUSD("auto"); setStateOfKBTC("auto");
 		}
 
 	}
@@ -615,10 +607,13 @@ const QuickTrade = ({
 		tokenClicked("");
 	}, [resetState]);
 
-  useEffect(() => {
-    if (action==="autostakeKSMtoKarura" && originChainSelected!=="Origin Chain") KSM_chainTabClicked("Karura");
-	}, [originChainSelected, action]);
-   
+  // useEffect(() => {
+  //   if (action==="autostakeKSMtoKarura" && originChainSelected!=="Origin Chain") KSM_chainTabClicked("Karura");
+	// }, [originChainSelected, action]);
+  
+  useEffectOnce(() => {
+    actionModuleClicked("XCMtransfer")
+  }, []);
 
 	return(
 		<>
@@ -626,51 +621,25 @@ const QuickTrade = ({
         <div className="card" style={{marginTop:"0px",paddingTop:"0px",backgroundColor:"",color:"#9E38FF"}}>
           <div className=" d-block m-0 p-0"style={{marginTop:"0px",paddingTop:"0px",backgroundColor:""}}>
             
-              {action===""? (
-            
-                <div className="row" style={{ marginTop:"0px"}}>
-                  <div className="col-xl-12 col-xxl-4 col-lg-6 col-sm-6 p-0 m-0" >
-                    <div>
-                      <p className="fs-28 text-center text-white">What Would You Like To Do?</p>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-xl-4 col-xxl-4 col-lg-6 col-sm-6">
-                      <button type="button" className="btn btn-outline-warning btn-sm mx-4 py-1" onClick={() => actionModuleClicked("XCMtransfer")}>Use XCM To Make A Cross Chain Transfer</button>
-                    </div> 
-                    <div className="col-xl-4 col-xxl-4 col-lg-6 col-sm-6">
-                      <button type="button" className="btn btn-outline-danger btn-sm mx-4 py-1" onClick={() => actionModuleClicked("autostakeKSMtoKarura")}>Use XCM To AutoStake KSM On Karura</button>
-                    </div> 
-                    <div className="col-xl-4 col-xxl-4 col-lg-6 col-sm-6">
-                      <button type="button" className="btn btn-outline-danger btn-sm mx-4 py-1" onClick={() => actionModuleClicked("unstakeKSMfromLKSMatKarura")}>UnStake KSM from LKSM On Karura</button>
-                    </div> 
-                  </div>
-                </div>
-                
-              )
-              :
-              (
-                <div>
-                  { instructionStatus==="Step1"? (
-                      <h4 className="fs-30 text-center mt-2"><span style={{color:"white"}}>Step 1 - Select The <span style={{color:"yellow"}}>Asset</span> To Transfer</span></h4>
-                    )
-                    : instructionStatus==="Step2"? (
-                      <h4 className="fs-30 text-center mt-2"><span style={{color:"white"}}>Step 2 - Select The <span style={{color:"yellow"}}>Origin Chain</span> Balance To <span style={{color:"yellow"}}>Transfer From</span></span></h4>
-                    )
-                    :  instructionStatus==="Step3"? (
-                      <h4 className="fs-30 text-center mt-2"><span style={{color:"white"}}>Step 3 - Select The <span style={{color:"yellow"}}>Destination Chain</span> Balance To <span style={{color:"yellow"}}>Transfer To</span></span></h4>
-                    )
-                    :  instructionStatus==="KSMstaking"? (
-                      <h4 className="fs-30 text-center mt-2"><span style={{color:"white"}}>Select The <span style={{color:"yellow"}}>Origin Chain KSM Balance </span> To Transfer And Stake</span></h4>
-                    )
-                    :  instructionStatus==="KSMunstaking"? (
-                      <h4 className="fs-30 text-center mt-2"><span style={{color:"white"}}>Unstaking <span style={{color:"yellow"}}>KSM from LKSM </span>and depositing at Karura</span></h4>
-                    )
-                    : <></>
-                  }
-                </div> 
-              )
-            }
+            <div>
+              { instructionStatus==="Step1"? (
+                  <h4 className="fs-30 text-center mt-2"><span style={{color:"white"}}>Step 1 - Select The <span style={{color:"yellow"}}>Asset</span> To Transfer</span></h4>
+                )
+                : instructionStatus==="Step2"? (
+                  <h4 className="fs-30 text-center mt-2"><span style={{color:"white"}}>Step 2 - Select The <span style={{color:"yellow"}}>Origin Chain</span> Balance To <span style={{color:"yellow"}}>Transfer From</span></span></h4>
+                )
+                :  instructionStatus==="Step3"? (
+                  <h4 className="fs-30 text-center mt-2"><span style={{color:"white"}}>Step 3 - Select The <span style={{color:"yellow"}}>Destination Chain</span> Balance To <span style={{color:"yellow"}}>Transfer To</span></span></h4>
+                )
+                // :  instructionStatus==="KSMstaking"? (
+                //   <h4 className="fs-30 text-center mt-2"><span style={{color:"white"}}>Select The <span style={{color:"yellow"}}>Origin Chain KSM Balance </span> To Transfer And Stake</span></h4>
+                // )
+                // :  instructionStatus==="KSMunstaking"? (
+                //   <h4 className="fs-30 text-center mt-2"><span style={{color:"white"}}>Unstaking <span style={{color:"yellow"}}>KSM from LKSM </span>and depositing at Karura</span></h4>
+                // )
+                : <></>
+              }
+            </div> 
 
           </div>
         </div>
@@ -724,7 +693,7 @@ const QuickTrade = ({
                       </div>
                     </div>
                   </div>
-                  <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"50px", padding:"2px" }}>
+                  {/* <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"50px", padding:"2px" }}>
                     <div className="widget-stat card" style={{ height:"100%", backgroundColor: "#0E86D4", width:"100%", }}>
                       <div className="card-body  p-2">
                         <div className="media" style={{height:"40px"}}>
@@ -745,8 +714,8 @@ const QuickTrade = ({
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"50px", padding:"2px" }}>
+                  </div> */}
+                  {/* <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"50px", padding:"2px" }}>
                     <div className="widget-stat card" style={{ height:"100%", backgroundColor: "#8fcb02", width:"100%", }}>
                       <div className="card-body  p-2">
                         <div className="media" style={{height:"40px"}}>
@@ -756,7 +725,7 @@ const QuickTrade = ({
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
 {/* ------------------2nd ROW------------------- */}
@@ -804,7 +773,7 @@ const QuickTrade = ({
                       </div>
                     </div>
                   </div>
-                  <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowKSM.opacity}`, transition:"opacity 1s", pointerEvents:`${(elemKSM[2].clickable==="none" || rowKSM.clickable==="none")?"none":""}` }}  onClick={() => KSM_chainTabClicked("Moonriver")}>
+                  {/* <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowKSM.opacity}`, transition:"opacity 1s", pointerEvents:`${(elemKSM[2].clickable==="none" || rowKSM.clickable==="none")?"none":""}` }}  onClick={() => KSM_chainTabClicked("Moonriver")}>
                     <div className="widget-stat card " style={{ height:"100%", backgroundColor: `${elemKSM[2].activebackgroundColor}`,  opacity: `${elemKSM[2].opacity}`, transition:"opacity 1s", width:"100%",  }}>
                       <div className="card-body  p-2">
                         <div className="media" style={{height: "50px"}}>
@@ -816,8 +785,8 @@ const QuickTrade = ({
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowKSM.opacity}`, transition:"opacity 1s", pointerEvents:`${(elemKSM[3].clickable==="none" || rowKSM.clickable==="none")?"none":""}` }}  onClick={() => KSM_chainTabClicked("Kintsugi")}>
+                  </div> */}
+                  {/* <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowKSM.opacity}`, transition:"opacity 1s", pointerEvents:`${(elemKSM[3].clickable==="none" || rowKSM.clickable==="none")?"none":""}` }}  onClick={() => KSM_chainTabClicked("Kintsugi")}>
                     <div className="widget-stat card " style={{ height:"100%",  backgroundColor: `${elemKSM[3].activebackgroundColor}`,  opacity: `${elemKSM[3].opacity}`, transition:"opacity 1s", width:"100%", }}>
                       <div className="card-body  p-2">
                         <div className="media" style={{height: "50px"}}>
@@ -829,8 +798,8 @@ const QuickTrade = ({
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowKSM.opacity}`, transition:"opacity 1s", pointerEvents:`${(elemKSM[4].clickable==="none" || rowKSM.clickable==="none")?"none":""}` }}  onClick={() => KSM_chainTabClicked("Phala")}>
+                  </div> */}
+                  {/* <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowKSM.opacity}`, transition:"opacity 1s", pointerEvents:`${(elemKSM[4].clickable==="none" || rowKSM.clickable==="none")?"none":""}` }}  onClick={() => KSM_chainTabClicked("Phala")}>
                     <div className="widget-stat card " style={{ height:"100%",  backgroundColor: `${elemKSM[4].activebackgroundColor}`,  opacity: `${elemKSM[4].opacity}`, transition:"opacity 1s", width:"100%", }}>
                       <div className="card-body  p-2">
                         <div className="media" style={{height: "50px"}}>
@@ -842,12 +811,12 @@ const QuickTrade = ({
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
 {/* ------------------3rd ROW------------------- */}
 
-                <div className="row" style={{ marginTop:"10px", cursor:"pointer"}}>
+                {/* <div className="row" style={{ marginTop:"10px", cursor:"pointer"}}>
                   <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{height:"70px", pointerEvents: `${stateOfKAR}`}} onClick={() => tokenClicked("KAR")}>
                     <div className="row">
                       <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" ></div>
@@ -915,11 +884,11 @@ const QuickTrade = ({
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
 {/* ------------------4th ROW------------------- */}
 
-                <div className="row" style={{ marginTop:"10px", cursor:"pointer"}}>
+                {/* <div className="row" style={{ marginTop:"10px", cursor:"pointer"}}>
                   <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{height:"70px", pointerEvents: `${stateOfMOVR}`}} onClick={() => tokenClicked("MOVR")}>
                     <div className="row">
                       <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" ></div>
@@ -984,13 +953,13 @@ const QuickTrade = ({
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
 
 {/* ------------------5th ROW------------------- */}
 
 
-                 <div className="row" style={{ marginTop:"10px", cursor:"pointer"}}>
+                 {/* <div className="row" style={{ marginTop:"10px", cursor:"pointer"}}>
                     <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{height:"70px", pointerEvents: `${stateOfKINT}`}} onClick={() => tokenClicked("KINT")}>
                       <div className="row">
                         <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" ></div>
@@ -1055,11 +1024,11 @@ const QuickTrade = ({
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
 {/* ------------------6th ROW------------------- */}
 
-                  <div className="row" style={{ marginTop:"10px", cursor:"pointer"}}>
+                  {/* <div className="row" style={{ marginTop:"10px", cursor:"pointer"}}>
                     <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{height:"70px", pointerEvents: `${stateOfPHA}`}} onClick={() => tokenClicked("PHA")}>
                       <div className="row">
                         <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" ></div>
@@ -1124,7 +1093,7 @@ const QuickTrade = ({
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
 
 {/* ------------------7th ROW------------------- */}
@@ -1161,7 +1130,7 @@ const QuickTrade = ({
                         </div>
                       </div>
                     </div>
-                    <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowAUSD.opacity}`, transition:"opacity 1s", pointerEvents:`${(elemAUSD[1].clickable==="none" || rowAUSD.clickable==="none")?"none":""}` }}  onClick={() => AUSD_chainTabClicked("Moonriver")}>
+                    {/* <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowAUSD.opacity}`, transition:"opacity 1s", pointerEvents:`${(elemAUSD[1].clickable==="none" || rowAUSD.clickable==="none")?"none":""}` }}  onClick={() => AUSD_chainTabClicked("Moonriver")}>
                       <div className="widget-stat card " style={{ height:"100%", backgroundColor: `${elemAUSD[1].activebackgroundColor}`,  opacity: `${elemAUSD[1].opacity}`, transition:"opacity 1s", width:"100%", }}>
                         <div className="card-body  p-2">
                           <div className="media" style={{height: "50px"}}>
@@ -1173,16 +1142,16 @@ const QuickTrade = ({
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowAUSD.opacity}`, transition:"opacity 1s", pointerEvents:`${rowAUSD.clickable}` }}  >
+                    </div> */}
+                    {/* <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowAUSD.opacity}`, transition:"opacity 1s", pointerEvents:`${rowAUSD.clickable}` }}  >
                       <div className="widget-stat card " style={{height:"100%", borderWidth: "1px", borderColor: "#5685e6", backgroundColor:"#1e1e2a", width:"100%"}}>
                         <div className="card-body  p-3">
                           <h6 className="m-0 text-white text-center">Transfer Channel</h6>
                           <h6 className="m-0 text-white text-center">Not Available Yet</h6>
                         </div>
                       </div>
-                    </div>
-                    <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowAUSD.opacity}`, transition:"opacity 1s", pointerEvents:`${rowAUSD.clickable}` }}  onClick={() => AUSD_chainTabClicked("Phala")}>
+                    </div> */}
+                    {/* <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowAUSD.opacity}`, transition:"opacity 1s", pointerEvents:`${rowAUSD.clickable}` }}  onClick={() => AUSD_chainTabClicked("Phala")}>
                       <div className="widget-stat card " style={{ height:"100%", backgroundColor: `${elemAUSD[3].activebackgroundColor}`,  opacity: `${elemAUSD[3].opacity}`, transition:"opacity 1s", width:"100%", }}>
                         <div className="card-body  p-2">
                           <div className="media" style={{height: "50px"}}>
@@ -1194,12 +1163,12 @@ const QuickTrade = ({
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
 
 {/* ------------------8th ROW------------------- */}
 
-                  <div className="row" style={{marginTop:"10px", cursor:"pointer"}}>
+                  {/* <div className="row" style={{marginTop:"10px", cursor:"pointer"}}>
                     <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{height:"70px", pointerEvents: `${stateOfKBTC}`}} onClick={() => tokenClicked("KBTC")}>
                       <div className="row">
                           <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" ></div>
@@ -1264,7 +1233,7 @@ const QuickTrade = ({
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </form>
             </div>

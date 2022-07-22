@@ -62,11 +62,11 @@ const SideBar = () => {
       className={`deznav ${iconHover}  `}
     >
       <PerfectScrollbar className="deznav-scroll">
-        <MM className="metismenu" id="menu">
+        {/* <MM className="metismenu" id="menu">
           <li className={`${charts.includes(path) ? "mm-active" : ""}`}>
             <Link className="ai-icon" to="/xcm"><i className="flaticon-025-dashboard"></i> <span className="nav-text">XCM</span></Link>
           </li>
-        </MM>
+        </MM> */}
       </PerfectScrollbar>
     </div>
   );

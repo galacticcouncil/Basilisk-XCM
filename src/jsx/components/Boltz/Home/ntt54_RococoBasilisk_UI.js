@@ -307,17 +307,7 @@ const Rococo = ({
                                 </div>
                               </div>
                           </div>
-                          <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"50px", padding:"2px" }}>
-                              <div className="widget-stat card" style={{ height:"100%", backgroundColor: "#8fcb02", width:"100%", }}>
-                                <div className="card-body  p-2"  style={{ backgroundColor:"", }}>
-                                    <div className="media" style={{height:"40px"}}>
-                                <div className="media-body text-white text-center">
-                                  <h4 className="text-white">PHALA</h4>
-                                </div>
-                                      </div>
-                                </div>
-                              </div>
-                          </div>
+                          
                           <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"50px", padding:"2px" }}>
                               <div className="widget-stat card" style={{ height:"100%", backgroundColor: "#890000", width:"100%", }}>
                                 <div className="card-body  p-2"  style={{ backgroundColor:"", }}>
@@ -361,7 +351,7 @@ const Rococo = ({
                                 </div>
                               </div>
                           </div>
-                          <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowBSX.opacity}`, transition:"opacity 1s", pointerEvents:`${(elemBSX[1].clickable==="none" || rowBSX.clickable==="none")?"none":""}` }}  onClick={() => BSX_chainTabClicked("Phala")}>
+                          {/* <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowBSX.opacity}`, transition:"opacity 1s", pointerEvents:`${(elemBSX[1].clickable==="none" || rowBSX.clickable==="none")?"none":""}` }}  onClick={() => BSX_chainTabClicked("Phala")}>
                               <div className="widget-stat card " style={{ height:"100%", backgroundColor:`${elemBSX[1].activebackgroundColor}`,  opacity: `${elemBSX[1].opacity}`, transition:"opacity 1s", width:"100%", }}>
                                 <div className="card-body  p-2"  style={{ backgroundColor:"", }}>
                                   <div className="media" style={{height: "50px"}}>
@@ -373,7 +363,7 @@ const Rococo = ({
                                   </div>
                                 </div>
                               </div>
-                          </div>
+                          </div> */}
                           <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowBSX.opacity}`, transition:"opacity 1s", pointerEvents:`${(elemBSX[2].clickable==="none" || rowBSX.clickable==="none")?"none":""}` }} onClick={() => BSX_chainTabClicked("Karura")}>
                               <div className="widget-stat card " style={{ height:"100%", backgroundColor: `${elemBSX[2].activebackgroundColor}`,  opacity: `${elemBSX[2].opacity}`, transition:"opacity 1s", width:"100%", }}>
                                 <div className="card-body  p-2"  style={{ backgroundColor:"", }}>
@@ -390,7 +380,7 @@ const Rococo = ({
                       </div>
                       {/* ------------------3rd ROW------------------- */}
                       <div className="row" style={{ marginTop:"10px", cursor:"pointer"}}>
-                          <div className="col-xl-4 col-xxl-4 col-lg-6 col-sm-6" style={{height:"70px", pointerEvents: `${stateOfPHA}`}} onClick={() => tokenClicked("PHA")}>
+                          {/* <div className="col-xl-4 col-xxl-4 col-lg-6 col-sm-6" style={{height:"70px", pointerEvents: `${stateOfPHA}`}} onClick={() => tokenClicked("PHA")}>
                             <div className="row">
                                 <div className="col-xl-6 col-xxl-4 col-lg-6 col-sm-6" ></div>
                                 <div className="col-xl-6 col-xxl-4 col-lg-6 col-sm-6" style={{height:"100px",  }}>
@@ -405,8 +395,8 @@ const Rococo = ({
                                   </div>
                                 </div>
                             </div>
-                          </div>
-                          <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowPHA.opacity}`, transition:"opacity 1s", pointerEvents:`${rowPHA.clickable}`}} onClick={() => PHA_chainTabClicked("Basilisk")}>
+                          </div> */}
+                          {/* <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowPHA.opacity}`, transition:"opacity 1s", pointerEvents:`${rowPHA.clickable}`}} onClick={() => PHA_chainTabClicked("Basilisk")}>
                               <div className="widget-stat card " style={{ height:"100%", backgroundColor: `${elemPHA[0].activebackgroundColor}`,  opacity: `${elemPHA[0].opacity}`, transition:"opacity 1s", width:"100%", }}>
                                 <div className="card-body  p-2"  style={{ backgroundColor:"", }}>
                                   <div className="media" style={{ height: "50px"}}>
@@ -432,7 +422,7 @@ const Rococo = ({
                                   </div>
                                 </div>
                               </div>
-                          </div>
+                          </div> */}
 
                           <div className="col-xl-2 col-xxl-4 col-lg-6 col-sm-6" style={{ height:"70px", padding:"2px", opacity:`${rowPHA.opacity}`, transition:"opacity 1s", pointerEvents:`${rowPHA.clickable}`}}>
                                 <div className="widget-stat card " style={{height:"100%", borderWidth: "1px", borderColor: "#5685e6", backgroundColor: "#1e1e2a", width:"100%", }}>

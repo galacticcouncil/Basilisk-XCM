@@ -39,7 +39,7 @@ const Markup = ( { setupSpecs, polakdotSignerfunction, polkadtoAccountList, rela
         {!pagePath && <NAV_NavHade blockHeader={blockHeader} />}
         {!pagePath && <NAV_SideBar />}
 
-        <div className={`${!pagePath ? "content-body" : ""}`} style={{marginBottom:"-450px"}}>
+        <div className={`${!pagePath ? "content-body" : ""}`}>
           <div
             className={`${!pagePath ? "container-fluid" : ""}`}
             style={{ minHeight: window.screen.height - 60 }}
