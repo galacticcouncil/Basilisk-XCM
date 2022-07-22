@@ -2305,6 +2305,7 @@ const setup_SubstrateChain = async (wsURL = 'MoonbaseAlpha') => {
   else if (wsURL === 'Kintsugi') WS_URL =  'wss://kintsugi.api.onfinality.io/public-ws'; 
   else if (wsURL === 'Phala')    WS_URL = 'wss://khala.api.onfinality.io/public-ws'; 
   else if (wsURL === 'Shiden')    WS_URL = 'wss://shiden.api.onfinality.io/public-ws'; 
+  else if (wsURL === 'Basilisk')    WS_URL = 'wss://rpc.basilisk.cloud'; 
 
   //testnets
   else if (wsURL === 'MoonbaseRelayTestnet') WS_URL = 'wss://frag-moonbase-relay-rpc-ws.g.moonbase.moonbeam.network'; 

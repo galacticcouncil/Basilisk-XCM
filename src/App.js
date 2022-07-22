@@ -145,41 +145,41 @@ function App() {
         // console.log("api_kusama: ",api_kusama);
         setApi("Kusama", api_kusama);
 
-        const { api: api_moonriver } = await setup_SubstrateChain("Moonriver");
-        // console.log("api_moonriver: ",api_moonriver);
-        setApi("Moonriver", api_moonriver);
+        // const { api: api_moonriver } = await setup_SubstrateChain("Moonriver");
+        // // console.log("api_moonriver: ",api_moonriver);
+        // setApi("Moonriver", api_moonriver);
 
         const { api: api_karura } = await setup_SubstrateChain("Karura");
         // console.log("api_karura: ",api_karura);
         setApi("Karura", api_karura);
 
-        const { api: api_kintsugi } = await setup_SubstrateChain("Kintsugi");
-        // console.log("api_kintsugi: ",api_kintsugi);
-        setApi("Kintsugi", api_kintsugi);
+        // const { api: api_kintsugi } = await setup_SubstrateChain("Kintsugi");
+        // // console.log("api_kintsugi: ",api_kintsugi);
+        // setApi("Kintsugi", api_kintsugi);
 
-        const { api: api_phala } = await setup_SubstrateChain("Phala");
-        // console.log("api_phala: ",api_phala);
-        setApi("Phala", api_phala);
+        // const { api: api_phala } = await setup_SubstrateChain("Phala");
+        // // console.log("api_phala: ",api_phala);
+        // setApi("Phala", api_phala);
 
 
-        const { api: api_Rococo_Karura } = await setup_SubstrateChain("Rococo_Karura");
-        // console.log("api_Rococo_Karura: ",api_Rococo_Karura);
-        setApi("Rococo_Karura", api_Rococo_Karura);
+        // const { api: api_Rococo_Karura } = await setup_SubstrateChain("Rococo_Karura");
+        // // console.log("api_Rococo_Karura: ",api_Rococo_Karura);
+        // setApi("Rococo_Karura", api_Rococo_Karura);
 
         const { api: api_Rococo_Basilisk } = await setup_SubstrateChain("Rococo_Basilisk");
         // console.log("api_Rococo_Basilisk: ",api_Rococo_Basilisk);
         setApi("Rococo_Basilisk", api_Rococo_Basilisk);
 
-        const { api: api_Rococo_Phala } = await setup_SubstrateChain("Rococo_Phala");
-        // console.log("api_Rococo_Phala: ",api_Rococo_Phala);
-        setApi("Rococo_Phala", api_Rococo_Phala);
+        // const { api: api_Rococo_Phala } = await setup_SubstrateChain("Rococo_Phala");
+        // // console.log("api_Rococo_Phala: ",api_Rococo_Phala);
+        // setApi("Rococo_Phala", api_Rococo_Phala);
 
         console.log("api_kusama.consts.balances.existentialDeposit : ",api_kusama.consts.balances.existentialDeposit.toString());             
-        console.log("api_moonriver.consts.balances.existentialDeposit : ",api_moonriver.consts.balances.existentialDeposit.toNumber());            
+        // console.log("api_moonriver.consts.balances.existentialDeposit : ",api_moonriver.consts.balances.existentialDeposit.toNumber());            
         console.log("api_karura.consts.balances.existentialDeposit : ",api_karura.consts.balances.existentialDeposit.toNumber());             
 
         setRelaySpecs({ api: api_kusama, chainID: undefined, blockNumber: undefined });
-        setParachainSpecs({ api: api_moonriver, chainID: undefined, blockNumber: undefined });
+        // setParachainSpecs({ api: api_moonriver, chainID: undefined, blockNumber: undefined });
         setKaruraAlphaSpecs({ api: api_karura, chainID: undefined, blockNumber: undefined });
         //#endregion
     }

@@ -196,6 +196,26 @@ const QuickTrade = ({
 
 							setTransfer_IsSubmiting(false);
 							setInputTranferAmount("");  resetAll();
+						} else if (orginChain==="Kusama" && targetChainDestination==="Basilisk")
+						{
+							console.log(`We are sending KSM from Kusama to Basilisk inputTranferAmount:${amount} sendToAddress:${sendToAddress}`);
+							setTransfer_IsSubmiting(true);
+							setTransactionMessage(`Transfer KSM from Kusama to Basilisk, submitted.`);
+
+							transferFromRelayToParachain(relaySpecs.api, parachainCodes.Basilisk, sendToAddress, amount)
+								.then((resolveMsg) => {
+									setTransactionMessage(
+											resolveMsg.map((msg, index) => {
+												return ( <p key={index}>{msg}</p> )
+											})
+									);
+	
+									getAllBalancesAndAccountFormats(polakdotAccountSigner.address, accountList[0]);
+								})
+								.catch((rejectMsg) => console.log(rejectMsg));
+
+							setTransfer_IsSubmiting(false);
+							setInputTranferAmount("");  resetAll();
 						}
 
 						//#endregion
