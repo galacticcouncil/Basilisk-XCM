@@ -182,24 +182,7 @@ const QuickTrade = ({
 							setTransfer_IsSubmiting(true);
 							setTransactionMessage(`Transfer KSM from Kusama to Karura, submitted.`);
 
-							if (selectedAction==="autostakeKSMtoKarura")
-							{
-								// console.log(`KSM will be sent from Kusama to Karura and then staked for LKSM`);
-								stakeKSMfromKusama(relaySpecs.api, parachainCodes.Karura, sendToAddress, amount)
-								.then((resolveMsg) => {
-									setTransactionMessage(
-											resolveMsg.map((msg, index) => {
-												return ( <p key={index}>{msg}</p> )
-											})
-									);
-
-									getAllBalancesAndAccountFormats(polakdotAccountSigner.address, accountList[0]);
-								})
-								.catch((rejectMsg) => console.log(rejectMsg));
-							}
-							else
-							{
-								transferFromRelayToParachain(relaySpecs.api, parachainCodes.Karura, sendToAddress, amount)
+							transferFromRelayToParachain(relaySpecs.api, parachainCodes.Karura, sendToAddress, amount)
 								.then((resolveMsg) => {
 									setTransactionMessage(
 											resolveMsg.map((msg, index) => {
@@ -210,7 +193,6 @@ const QuickTrade = ({
 									getAllBalancesAndAccountFormats(polakdotAccountSigner.address, accountList[0]);
 								})
 								.catch((rejectMsg) => console.log(rejectMsg));
-							}
 
 							setTransfer_IsSubmiting(false);
 							setInputTranferAmount("");  resetAll();
